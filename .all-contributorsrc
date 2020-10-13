@@ -15,6 +15,20 @@
         "review",
         "maintenance"
       ]
+    },
+    {
+      "login": "louiCoder",
+      "name": "Musanje Louis Michael",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/32771081?v=4",
+      "profile": "https://github.com/louiCoder",
+      "contributions": [
+        "content",
+        "code",
+        "maintenance",
+        "review",
+        "projectManagement",
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 7,
