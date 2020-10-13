@@ -1,0 +1,3 @@
+@base=http://localhost:8080
+
+GET {{base}}/chat HTTP/1.1
