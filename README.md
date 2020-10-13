@@ -1,6 +1,6 @@
 # Playground
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 A playground for react, react native, nodeJs implementations before being implemented in actual projects.
 
@@ -14,6 +14,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://www.linkedin.com/in/benard-asiimwe-bataringaya-4b673672/"><img src="https://avatars0.githubusercontent.com/u/17830204?v=4" width="100px;" alt=""/><br /><sub><b>Asiimwe Ben</b></sub></a><br /><a href="https://github.com/louiCoder/UG-Tour/commits?author=King-Benx" title="Code">💻</a> <a href="https://github.com/louiCoder/UG-Tour/pulls?q=is%3Apr+reviewed-by%3AKing-Benx" title="Reviewed Pull Requests">👀</a> <a href="#maintenance-King-Benx" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/louiCoder"><img src="https://avatars2.githubusercontent.com/u/32771081?v=4" width="100px;" alt=""/><br /><sub><b>Musanje Louis Michael</b></sub></a><br /><a href="#content-louiCoder" title="Content">🖋</a> <a href="https://github.com/louiCoder/UG-Tour/commits?author=louiCoder" title="Code">💻</a> <a href="#maintenance-louiCoder" title="Maintenance">🚧</a> <a href="https://github.com/louiCoder/UG-Tour/pulls?q=is%3Apr+reviewed-by%3AlouiCoder" title="Reviewed Pull Requests">👀</a> <a href="#projectManagement-louiCoder" title="Project Management">📆</a> <a href="#platform-louiCoder" title="Packaging/porting to new platform">📦</a></td>
   </tr>
 </table>
 
