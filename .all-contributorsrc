@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "King-Benx",
+      "name": "Asiimwe Ben",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/17830204?v=4",
+      "profile": "https://www.linkedin.com/in/benard-asiimwe-bataringaya-4b673672/",
+      "contributions": [
+        "code",
+        "review",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "UG-Tour",
+  "projectOwner": "louiCoder",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
