@@ -1,0 +1,50 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "King-Benx",
+      "name": "Asiimwe Ben",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/17830204?v=4",
+      "profile": "https://www.linkedin.com/in/benard-asiimwe-bataringaya-4b673672/",
+      "contributions": [
+        "code",
+        "review",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "louiCoder",
+      "name": "Musanje Louis Michael",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/32771081?v=4",
+      "profile": "https://github.com/louiCoder",
+      "contributions": [
+        "content",
+        "code",
+        "maintenance",
+        "review",
+        "projectManagement",
+        "platform"
+      ]
+    },
+    {
+      "login": "Stuartkal",
+      "name": "Stuartkal",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/47181425?v=4",
+      "profile": "https://stuwies-creative-space.netlify.app/",
+      "contributions": [
+        "code",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "UG-Tour",
+  "projectOwner": "louiCoder",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
