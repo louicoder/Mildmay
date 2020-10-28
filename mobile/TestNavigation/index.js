@@ -25,7 +25,7 @@ const AllStacks = () => (
   </Stacks.Navigator>
 );
 const DrawerScreens = () => (
-  <DrawerStack.Navigator>
+  <DrawerStack.Navigator initialRouteName="Home">
     <DrawerStack.Screen name="Login" component={Login} />
     <DrawerStack.Screen name="Profile" component={Profile} />
     <DrawerStack.Screen name="Home" component={AllStacks} />
