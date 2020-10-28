@@ -11,24 +11,28 @@ const DrawerStack = createDrawerNavigator();
 
 const BottomStack = createBottomTabNavigator();
 
-const BottomStackScreens = () => (
+const BottomStackScreens = ({}) => (
   <BottomStack.Navigator>
-    <BottomStack.Screen name="Login" component={Login} />
-    <BottomStack.Screen name="Profile" component={Profile} />
+    <BottomStack.Screen name="Login" component={Login} options={({ navigation, route }) => ({ title: route.name })} />
+    <BottomStack.Screen
+      name="Profile"
+      component={Profile}
+      options={({ navigation, route }) => ({ title: route.name })}
+    />
   </BottomStack.Navigator>
 );
 
 const AllStacks = () => (
   <Stacks.Navigator>
     <Stacks.Screen name="Home" component={BottomStackScreens} />
-    <Stacks.Screen name="Drawer" component={DrawerScreens} />
+    {/* <Stacks.Screen name="Drawer" component={DrawerScreens} /> */}
   </Stacks.Navigator>
 );
 const DrawerScreens = () => (
   <DrawerStack.Navigator initialRouteName="Home">
     <DrawerStack.Screen name="Login" component={Login} />
     <DrawerStack.Screen name="Profile" component={Profile} />
-    <DrawerStack.Screen name="Home" component={AllStacks} />
+    <DrawerStack.Screen name="Home" component={AllStacks} options={({ route }) => ({ title: route.name })} />
   </DrawerStack.Navigator>
 );
 

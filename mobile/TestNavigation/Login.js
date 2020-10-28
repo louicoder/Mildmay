@@ -7,8 +7,8 @@ const Login = ({ navigation }) => {
   });
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>This is the login screen,</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <Text>This is the home screen,</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile', { title: 'Profile' })}>
         <Text style={{ color: 'blue', marginVertical: 10 }}>Go to Profile</Text>
       </TouchableOpacity>
     </View>
