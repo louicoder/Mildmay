@@ -10,6 +10,8 @@ target 'mobile' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+
+
   target 'mobileTests' do
     inherit! :complete
     # Pods for testing

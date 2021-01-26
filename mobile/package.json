@@ -13,14 +13,21 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.10.0",
     "@react-navigation/drawer": "^5.10.0",
+    "@react-navigation/material-bottom-tabs": "^5.3.12",
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.10.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-material-ripple": "^0.9.1",
+    "react-native-modal": "^11.6.1",
+    "react-native-paper": "^4.7.0",
     "react-native-reanimated": "^1.13.1",
+    "react-native-responsive-fontsize": "^0.5.0",
     "react-native-safe-area-context": "^3.1.8",
-    "react-native-screens": "^2.12.0"
+    "react-native-screens": "^2.12.0",
+    "react-native-vector-icons": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
