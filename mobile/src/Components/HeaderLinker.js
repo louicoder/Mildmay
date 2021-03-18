@@ -20,9 +20,9 @@ const HeaderLinker = ({ title, extStyles }) => {
         extStyles
       ]}
     >
-      <Text text={title} extStyles={{ fontSize: RFValue(18), fontWeight: '600' }} />
+      <Text text={title} extStyles={{ fontSize: RFValue(14), fontWeight: '700' }} />
       <Ripple style={{ flexDirection: 'row', alignItems: 'center', height: '100%' }}>
-        <Text text="View all" extStyles={{ marginRight: RFValue(0), fontSize: RFValue(16) }} />
+        <Text text="View all" extStyles={{ marginRight: RFValue(0), fontSize: RFValue(14) }} />
         <Icon name="chevron-right" size={RFValue(20)} />
       </Ripple>
     </View>

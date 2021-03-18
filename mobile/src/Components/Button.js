@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-const Button = ({ title, onPress, onPressIn, extStyles, rippleDuration = 350, noBg = false }) => {
+const Button = ({ title, onPress, onPressIn, extStyles, rippleDuration = 350, noBg = false, textStyles }) => {
   return (
-    <Ripple
+    <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
       style={[
@@ -22,10 +22,12 @@ const Button = ({ title, onPress, onPressIn, extStyles, rippleDuration = 350, no
         },
         extStyles
       ]}
-      rippleDuration={rippleDuration}
+      // rippleDuration={rippleDuration}
     >
-      <Text style={{ fontSize: RFValue(16), fontWeight: '600', color: '#023e8a', textAlign: 'center' }}>{title}</Text>
-    </Ripple>
+      <Text style={[ { fontSize: RFValue(16), fontWeight: '600', color: '#023e8a', textAlign: 'center' }, textStyles ]}>
+        {title}
+      </Text>
+    </Pressable>
   );
 };
 

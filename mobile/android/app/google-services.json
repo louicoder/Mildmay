@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "687559068453",
+    "project_id": "mildmay-306119",
+    "storage_bucket": "mildmay-306119.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687559068453:android:4844a623d36d51b93be8cc",
+        "android_client_info": {
+          "package_name": "com.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687559068453-ddnhcch0tbkoejddiliauge90ohdof11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_npEpdhTraTM2G9hfH5zUERj0gQpFbDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687559068453-ddnhcch0tbkoejddiliauge90ohdof11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
