@@ -57,3 +57,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# ignore keys for firebase
+/android/app/google-services.json
