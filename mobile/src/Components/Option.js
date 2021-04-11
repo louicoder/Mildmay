@@ -3,13 +3,14 @@ import { View, Text, Pressable } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Constants } from '../Utils';
 
 const Option = ({ title, selected = false, onPress, onPressIn, rippleDuration = 350 }) => {
   return (
     <Pressable
       style={{
         flexDirection: 'row',
-        backgroundColor: selected ? '#000' : 'transparent',
+        backgroundColor: selected ? Constants.green : 'transparent',
         borderWidth: selected ? 0 : RFValue(0.5),
         borderColor: '#eee',
         alignItems: 'center',

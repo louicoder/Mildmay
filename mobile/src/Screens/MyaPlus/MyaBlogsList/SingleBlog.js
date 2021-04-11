@@ -3,12 +3,12 @@ import { View, Text, Image, Pressable } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
-import { HelperFunctions, Queries } from '../../../Utils';
+import { Constants, HelperFunctions, Queries } from '../../../Utils';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-const SingleBlog = React.memo(({ setLoading, ...props }) => {
-  console.log('State', props.id);
+const SingleBlog = React.memo(({ setLoading, navigation, ...props }) => {
+  console.log('user info');
 
   const likeHandler = async () => {
     setLoading(true);
@@ -41,9 +41,9 @@ const SingleBlog = React.memo(({ setLoading, ...props }) => {
           // marginBottom: RFValue(1)
         }}
       >
-        <Pressable onPress={() => alert('')}>
+        <Pressable onPress={() => null}>
           <Image
-            source={{ uri: props.profileUrl }}
+            source={{ uri: (props.userInfo && props.userInfo.imageUrl) || Constants.PROFILE_IMAGE }}
             style={{ width: RFValue(40), height: RFValue(40), borderRadius: RFValue(40) }}
           />
         </Pressable>
@@ -54,9 +54,12 @@ const SingleBlog = React.memo(({ setLoading, ...props }) => {
       </View>
 
       {props.imageUrl ? (
-        <Image source={{ uri: props.imageUrl }} style={{ width: '100%', height: RFValue(300) }} resizeMode="cover" />
+        <Pressable onPress={() => navigation.navigate('MyaPlusHome', props)}>
+          <Image source={{ uri: props.imageUrl }} style={{ width: '100%', height: RFValue(350) }} resizeMode="cover" />
+        </Pressable>
       ) : null}
-      <View
+      <Pressable
+        onPress={() => navigation.navigate('MyaPlusHome', props)}
         style={{
           backgroundColor: props.imageUrl ? '#eeeeee70' : '#eee',
           padding: RFValue(10)
@@ -70,7 +73,7 @@ const SingleBlog = React.memo(({ setLoading, ...props }) => {
         >
           {props.caption}
         </Text>
-      </View>
+      </Pressable>
       <View
         style={{
           marginHorizontal: RFValue(10),

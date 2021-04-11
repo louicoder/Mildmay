@@ -1,23 +1,49 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert, ActivityIndicator } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useDispatch, useSelector } from 'react-redux';
 import LOGO from '../../assets/MUG.png';
+import auth from '@react-native-firebase/auth';
+import { Queries } from '../../Utils';
 
 const Splash = ({ navigation: { navigate } }) => {
+  const [ state, setState ] = React.useState({ loading: false });
+  const loading = useSelector((state) => state.loading.effects.Account);
+  const dispatch = useDispatch();
+  // console.log('Dispatch', auth().currentUser);
   useEffect(() => {
-    const timer = setTimeout(() => navigate('Login'), 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  });
+    console.log('Auht', auth().currentUser);
+    if (auth().currentUser && auth().currentUser.uid) getUserDetails();
+    else navigate('Login');
+  }, []);
+
+  const getUserDetails = async () => {
+    // setState({ ...state, loading: true });
+    await dispatch.Account.getUserDetails({
+      uid: auth().currentUser.uid,
+      callback: (resp) => {
+        console.log('Resp from getting user details', resp);
+        if (!resp.success) {
+          setState({ ...state, loading: false });
+          // Alert.alert('Error', error);
+          return navigate('Login');
+        }
+        setState({ ...state, loading: false });
+        navigate('HomeScreens');
+      }
+    });
+  };
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
       <View style={{ width: '100%', alignItems: 'center' }}>
         <Image style={{ width: RFValue(200), height: RFValue(200) }} source={LOGO} />
-        {/* <Text style={{ color: '#169B5C', fontSize: RFValue(20), fontWeight: 'bold' }}>MildMay Uganda</Text> */}
       </View>
-      <Text style={{ color: 'green', position: 'absolute', bottom: RFValue(30) }}>www.mildmay.org.ug</Text>
+      <View style={{ position: 'absolute', bottom: RFValue(30) }}>
+        {loading.getUserDetails && <ActivityIndicator size={RFValue(14)} style={{}} color="green" />}
+        <Text style={{ color: 'green' }}>www.mildmay.org.ug</Text>
+      </View>
     </View>
   );
 };

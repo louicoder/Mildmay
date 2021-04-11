@@ -5,11 +5,11 @@ import { Button, HeaderLinker, Text } from '../../Components';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { HelperFunctions } from '../../Utils';
 
-const Listing = ({ title = 'Sample Topic', data }) => {
-  console.log('Data', data);
+const Listing = (data) => {
+  // console.log('Data', rest);
   return (
     <View style={{ height: RFPercentage(30) }}>
-      <HeaderLinker title={title} extStyles={{ paddingHorizontal: RFValue(10) }} />
+      <HeaderLinker title={'title'} extStyles={{ paddingHorizontal: RFValue(10) }} />
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={data}

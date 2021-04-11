@@ -2,16 +2,15 @@ import React from 'react';
 import { View, Text, FlatList, ScrollView, Pressable, Alert, Platform } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Constants } from '../../../Utils';
-import BlogList from './BlogList';
+import BlogList from './MyaBlogsList/BlogList';
 
-const MyaBlogsList = ({ navigation }) => {
+const Blog = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <Pressable
         style={{
           // height: RFValue(50),
-          backgroundColor: Constants.darkGreen,
+          backgroundColor: '#000',
           position: 'absolute',
           bottom: RFValue(10),
           justifyContent: 'center',
@@ -25,7 +24,7 @@ const MyaBlogsList = ({ navigation }) => {
         }}
         onPress={() => navigation.navigate('CreateBlog')}
       >
-        <Text style={{ color: '#fff', marginRight: RFValue(5), fontSize: RFValue(16) }}>Add post</Text>
+        <Text style={{ color: '#fff', marginRight: RFValue(10), fontSize: RFValue(16) }}>Create blog</Text>
         <Icon name="plus" size={RFValue(20)} color="#fff" />
       </Pressable>
       <View
@@ -42,7 +41,7 @@ const MyaBlogsList = ({ navigation }) => {
           paddingBottom: RFValue(10)
         }}
       >
-        <Text style={{ fontSize: RFValue(18), fontWeight: 'bold' }}>MyaPlus</Text>
+        <Text style={{ fontSize: RFValue(18) }}>MyaPlus</Text>
         <Pressable
           onPress={() => navigation.toggleDrawer()}
           style={{
@@ -65,4 +64,4 @@ const MyaBlogsList = ({ navigation }) => {
   );
 };
 
-export default MyaBlogsList;
+export default Blog;

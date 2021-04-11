@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, Pressable, ScrollView, ImageBackground, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Image, Pressable, ScrollView, ImageBackground, Alert, Keyboard } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { PERMISSIONS } from 'react-native-permissions';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { HelperFunctions, Queries } from '../../Utils';
+import { Constants, HelperFunctions, Queries } from '../../Utils';
 // import Firebase from '../../Utils/Firebase';
 import { ImagePicker } from '../../Utils/HelperFunctions';
 import Firestore from '@react-native-firebase/firestore';
 import Storage from '@react-native-firebase/storage';
+import { useSelector } from 'react-redux';
+import { Utils } from '@react-native-firebase/app';
 
 const DB = Firestore();
 
 const BlogPost = ({ navigation }) => {
+  const { user } = useSelector((state) => state.MyaPlus);
   const [ state, setState ] = React.useState({
-    caption:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Perge porro; Virtutis, magnitudinis animi, patientiae, fortitudinis fomentis dolor mitigari solet. Duo Reges: constructio interrete',
+    caption: '',
     topics: [],
     topicsVisible: true,
     image: {},
@@ -64,17 +66,21 @@ const BlogPost = ({ navigation }) => {
   const clearFields = () =>
     setState({ ...state, caption: '', image: {}, topics: [], progress: 0, progressVisible: false });
 
-  const createDocument = async (imageUrl = '') =>
+  const createDocument = async (imageUrl = '') => {
+    Keyboard.dismiss();
+    const dateCreated = new Date().toISOString();
+    console.log('ISO String', dateCreated);
     await Queries.createDoc(
       'Blogs',
       {
         caption: state.caption,
         topics: state.topics,
         imageUrl,
-        dateCreated: new Date().toDateString(),
+        dateCreated,
         timeStamp: Firestore.FieldValue.serverTimestamp(),
         likes: [],
-        comments: []
+        comments: [],
+        userInfo: { email: user.email, imageUrl: user.profileImage || Constants.PROFILE_IMAGE }
       },
       ({ error, doc }) => {
         if (error) return Alert.alert(error);
@@ -82,6 +88,7 @@ const BlogPost = ({ navigation }) => {
         return navigation.navigate('MyaBlogsList');
       }
     );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#eee' }}>
@@ -95,7 +102,14 @@ const BlogPost = ({ navigation }) => {
           marginTop: RFValue(10)
         }}
       >
-        <Text style={{ fontSize: RFValue(15) }}>Create Post</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Icon
+            name={Platform.OS === 'android' ? 'arrow-left' : 'chevron-left'}
+            size={RFValue(25)}
+            onPress={() => navigation.goBack()}
+          />
+          <Text style={{ fontSize: RFValue(18), marginLeft: RFValue(10), fontWeight: '700' }}>Create Post</Text>
+        </View>
         <Pressable
           onPress={() =>
             state.image.uri && !state.progressVisible
@@ -106,7 +120,7 @@ const BlogPost = ({ navigation }) => {
             alignItems: 'center',
             paddingHorizontal: RFValue(15),
             paddingVertical: RFValue(8),
-            backgroundColor: '#010203',
+            backgroundColor: Constants.green,
             borderRadius: RFValue(50)
           }}
         >
@@ -161,7 +175,7 @@ const BlogPost = ({ navigation }) => {
             }}
           >
             <Icon name="camera" size={RFValue(200)} color="#ccc" />
-            <Text style={{ fontSize: RFValue(14), color: '#000000' }}>Press to select image for post</Text>
+            <Text style={{ fontSize: RFValue(14), color: '#000000' }}>Touch here to select image for post</Text>
           </Pressable>
         ) : null}
 
@@ -186,7 +200,7 @@ const BlogPost = ({ navigation }) => {
               flexDirection: 'row'
             }}
           >
-            {[ 'sex', 'reproductive health', 'Testing', 'Colours', 'Travelling' ].map((item, index) => (
+            {Constants.topics.map((item, index) => (
               <Pressable
                 onPress={() =>
                   setState({
@@ -198,17 +212,23 @@ const BlogPost = ({ navigation }) => {
                 key={HelperFunctions.keyGenerator()}
                 style={{
                   borderWidth: 1,
-                  borderColor: state.topics.includes(item) ? '#000' : '#ccc',
+                  borderColor: state.topics.includes(item) ? Constants.green : '#ccc',
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: RFValue(10),
                   marginRight: RFValue(5),
                   borderRadius: RFValue(50),
-                  backgroundColor: state.topics.includes(item) ? '#000' : 'transparent',
+                  backgroundColor: state.topics.includes(item) ? Constants.green : 'transparent',
                   marginBottom: RFValue(5)
                 }}
               >
-                <Text style={{ fontSize: RFValue(12), color: state.topics.includes(item) ? '#fff' : '#000' }}>
+                <Text
+                  style={{
+                    fontSize: RFValue(12),
+                    color: state.topics.includes(item) ? '#fff' : '#000',
+                    textTransform: 'capitalize'
+                  }}
+                >
                   {item}
                 </Text>
               </Pressable>
@@ -245,7 +265,7 @@ const BlogPost = ({ navigation }) => {
             marginHorizontal: RFValue(10),
             paddingHorizontal: RFValue(20),
             paddingVertical: RFValue(10),
-            backgroundColor: '#000',
+            backgroundColor: Constants.green,
             alignItems: 'center',
             marginVertical: RFValue(10),
             height: RFValue(50),

@@ -8,5 +8,22 @@ import Suggestions from './Suggestions';
 import CreateBlog from './CreateBlog';
 import MyaPlus from './MyaPlus';
 import MyaBlogsList from './MyaPlus/MyaBlogsList';
+import Blog from './MyaPlus/Blog';
+import EditAccount from './EditAccount';
+import SingleDoctorProfile from './SingleDoctorProfile';
 
-export { Home, Login, Account, Search, InfoTab, Doctors, Suggestions, CreateBlog, MyaPlus, MyaBlogsList };
+export {
+  Home,
+  Login,
+  Account,
+  Search,
+  InfoTab,
+  Doctors,
+  Suggestions,
+  CreateBlog,
+  MyaPlus,
+  MyaBlogsList,
+  Blog,
+  EditAccount,
+  SingleDoctorProfile
+};

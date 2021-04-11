@@ -5,7 +5,9 @@ import { RFValue } from 'react-native-responsive-fontsize';
 const Input = ({ title = '', value, onChangeText, extStyles, placeholder, filled = true, inputStyles }) => {
   return (
     <View style={[ { marginBottom: RFValue(10), width: '100%' }, extStyles ]}>
-      {title ? <Text style={{ marginBottom: RFValue(5), fontSize: RFValue(12) }}>{title}</Text> : null}
+      {title ? (
+        <Text style={{ marginBottom: RFValue(5), fontSize: RFValue(12), fontWeight: '700' }}>{title}</Text>
+      ) : null}
       <TextInput
         style={[
           {

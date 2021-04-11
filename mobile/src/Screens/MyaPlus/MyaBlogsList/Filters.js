@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { HelperFunctions } from '../../../Utils';
+import { Constants, HelperFunctions } from '../../../Utils';
 
 const Filters = React.memo(({ filter, setFilter }) => {
   // const [ state, setState ] = React.useState({ filter: '' });
@@ -15,20 +15,20 @@ const Filters = React.memo(({ filter, setFilter }) => {
       }}
     >
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {[ 'sex', 'reproductive health', 'Testing', 'Colours', 'Travelling' ].map((item, index) => (
+        {Constants.topics.map((item, index) => (
           <Pressable
             // onPress={() => setState({ ...state, filter: item })}
             onPress={() => setFilter(item)}
             key={HelperFunctions.keyGenerator()}
             style={{
               borderWidth: 1,
-              borderColor: filter === item ? '#000' : '#eee',
+              borderColor: filter === item ? Constants.green : '#eee',
               alignItems: 'center',
               justifyContent: 'center',
               paddingHorizontal: RFValue(15),
               marginRight: RFValue(10),
               borderRadius: RFValue(50),
-              backgroundColor: filter === item ? '#000' : 'transparent',
+              backgroundColor: filter === item ? Constants.green : 'transparent',
               marginLeft: index === 0 ? RFValue(10) : 0,
               height: RFValue(35)
             }}

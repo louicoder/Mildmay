@@ -1,3 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-export default StyleSheet.create({});
+export default StyleSheet.create({
+  followContainer: {
+    backgroundColor: '#eee',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: RFValue(10),
+    width: RFValue(50),
+    height: RFValue(50),
+    zIndex: 20
+  },
+  modalContainer: {
+    // flex: 1,
+    justifyContent: 'flex-end',
+    // alignItems: 'center',
+    margin: 0
+  }
+});

@@ -1,4 +1,5 @@
 import MyaPlus from './MyaPlus';
-// import moduleName from 'module'
+import Account from './Account';
+import Doctors from './Doctors';
 
-export { MyaPlus };
+export { MyaPlus, Account, Doctors };

@@ -1,5 +1,5 @@
 import { launchImageLibrary } from 'react-native-image-picker';
-import { check, request } from 'react-native-permissions';
+import { check, PERMISSIONS, request } from 'react-native-permissions';
 import Storage from '@react-native-firebase/storage';
 
 export const keyGenerator = () => Math.random().toString(36).slice(2);
@@ -60,6 +60,7 @@ const switchPermissionResult = (result, permission, callback) => {
 };
 
 export const ImagePicker = (callback, opts = { maxWidth: 1024, maxHeight: 768, quality: 0.5 }) => {
+  // if(CheckPermissions(PERMISSIONS.ANDROID.CAMERA) !== 'granted')
   const options = {
     title: 'Select Photo',
     // customButtons: [ { name: 'fb', title: 'Choose Photo from Gallery' } ],
@@ -86,7 +87,7 @@ export const ImagePicker = (callback, opts = { maxWidth: 1024, maxHeight: 768, q
 
 export const uploadImage = async (storagePath, imagePath, setProgress, setError, callback) => {
   const storageRef = Storage().ref();
-  const uploadTask = storageRef.child(storagePath).putFile(imagePath);
+  const uploadTask = storageRef.child(`${storagePath}`).putFile(imagePath);
 
   uploadTask.on(
     'state_changed',

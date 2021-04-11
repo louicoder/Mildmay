@@ -5,10 +5,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { HeaderLinker } from '../../Components';
 import { HelperFunctions } from '../../Utils';
 
-const TopCategories = ({}) => {
+const TopCategories = ({ title }) => {
   return (
     <View style={{ width: '100%', paddingHorizontal: RFValue(10) }}>
-      <HeaderLinker title="Top Categories" />
+      {/* <HeaderLinker title="Top Categories" /> */}
+      <Text style={{ fontSize: RFValue(16), fontWeight: 'bold', marginVertical: RFValue(15) }}>Top Categories</Text>
       <View
         style={{
           width: '100%',

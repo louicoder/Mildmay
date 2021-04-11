@@ -41,6 +41,7 @@ const BlogList = ({ navigation }) => {
           data={blogs}
           renderItem={({ index, item }) => (
             <SingleBlog
+              navigation={navigation}
               setLoading={(loading) => setLoading(loading)}
               {...item}
               last={index + 1 === blogs.length}

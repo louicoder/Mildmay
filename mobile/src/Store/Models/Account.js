@@ -9,24 +9,16 @@ export default {
     }
   },
   effects: (dispatch) => ({
-    // Signup
-    async signup ({ email, password, callback }, state) {
-      try {
-        callback({ success: true, user: {} });
-      } catch (error) {
-        callback({ success: false, error: error.message });
-      }
-    },
-
+    //
     async getUserDetails ({ uid, callback }) {
       try {
         await Queries.getSingleDoc('Users', uid, (resp) => {
           const { email, uid } = auth().currentUser;
-          dispatch.MyaPlus.setUserDetails({ email, uid, ...resp.doc });
-          callback(resp);
+          dispatch.Account.setUserDetails({ email, uid, ...resp.doc });
+          callback({ success: true, result: resp.doc });
         });
       } catch (error) {
-        return callback({ error });
+        return callback({ success: false, result: error.message });
       }
     }
   })

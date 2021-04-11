@@ -9,36 +9,49 @@ import Input from '../../Components/Input';
 import Option from '../../Components/Option';
 import PasswordInput from '../../Components/PasswordInput';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import LOGO from '../../assets/mildmayLogo.png';
+import LOGO from '../../assets/MUG.png';
 import Firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { Queries } from '../../Utils';
+import { Constants, Queries } from '../../Utils';
 import LoadingModal from '../../Components/LoadingModal';
+import { useDispatch } from 'react-redux';
 
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [ state, setState ] = React.useState({
     loginMode: true,
     activeLogin: null,
-    email: 'musanje2010@gmail.com',
-    password: 'person',
+    email: '',
+    password: '',
     passwordVisible: true,
-    loading: false
+    loading: false,
+    mode: ''
   });
 
   const signupHandler = async () => {
-    setState({ ...state, loading: true });
+    // setState({ ...state, loading: true });
+    const payload = {
+      uid: '',
+      email: state.email,
+      followers: [],
+      following: [],
+      professions: [],
+      accountType: state.mode,
+      username: '',
+      interests: [],
+      intro: '',
+      imageUrl: Constants.PROFILE_IMAGE,
+      phoneNumber: '',
+      dateJoined: new Date().toISOString()
+    };
 
     try {
-      const response = await auth().createUserWithEmailAndPassword('musanje2021@gmail.com', 'person');
-      console.log('REsponse from firebase create user', response);
-      if (response.user) {
-        await Queries.createDoc(
-          'Users',
-          { uid: response.user.id, email: response.user.email, userType: state.activeLogin },
-          () => {
-            setState({ ...state, loading: false, loginMode: true });
-          }
-        );
+      const res = await auth().createUserWithEmailAndPassword(state.email, state.password);
+      if (res.user) {
+        console.log('USer', res.user);
+        await Queries.createDocWithId('Users', { ...payload, uid: res.user.uid }, res.user.uid, () => {
+          setState({ ...state, loading: false, loginMode: true });
+        });
       }
     } catch (error) {
       setState({ ...state, loading: false });
@@ -54,9 +67,14 @@ const Login = ({ navigation }) => {
       const resp = await auth().signInWithEmailAndPassword(email, password);
       // console.log('REsponse uid', resp);
       if (resp.user) {
-        navigation.navigate('HomeScreens');
+        dispatch.Account.getUserDetails({
+          uid: resp.user.uid,
+          callback: ({ result }) => {
+            setState({ ...state, loading: false, email: '', password: '' });
+            return navigation.navigate('HomeScreens');
+          }
+        });
       }
-      setState({ ...state, loading: false });
     } catch (error) {
       setState({ ...state, loading: false });
       return Alert.alert('Error signing in', error.message);
@@ -65,11 +83,9 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <LoadingModal visible={state.loading}>
-        <Text style={{ fontSize: RFValue(14), color: '#fff' }}>Please wait...</Text>
-      </LoadingModal>
+      <LoadingModal visible={state.loading} />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent', backgroundColor: 'transparent' }}>
-        <KeyboardAwareScrollView style={{ flex: 1 }}>
+        <KeyboardAwareScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
           <View
             style={{
               height: RFPercentage(100),
@@ -108,7 +124,12 @@ const Login = ({ navigation }) => {
                   <Option
                     {...props}
                     key={index}
-                    onPress={() => setState({ ...state, activeLogin: index === state.activeLogin ? null : index })}
+                    onPress={() =>
+                      setState({
+                        ...state,
+                        activeLogin: index === state.activeLogin ? null : index,
+                        mode: props.title
+                      })}
                     selected={state.activeLogin === index}
                   />
                 ))}
@@ -125,6 +146,7 @@ const Login = ({ navigation }) => {
               placeholder="Enter your password"
               secure={state.passwordVisible}
               switchPasswordVisibility={() => setState({ ...state, passwordVisible: !state.passwordVisible })}
+              onChangeText={(password) => setState({ ...state, password })}
             />
 
             <Button
