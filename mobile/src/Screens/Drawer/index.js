@@ -12,7 +12,7 @@ const Drawer = (props) => {
   const { user } = useSelector((state) => state.Account);
   React.useEffect(() => {
     // person finds peace.
-    console.log('USER', user);
+    // console.log('USER', user);
   }, []);
 
   const logout = async () =>
@@ -24,7 +24,6 @@ const Drawer = (props) => {
         style={{
           width: '100%',
           alignSelf: 'center',
-          // backgroundColor: 'purple',
           alignItems: 'center',
           marginVertical: RFValue(20),
           marginBottom: 0

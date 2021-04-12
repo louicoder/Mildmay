@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Dimensions, FlatList, ScrollView, Image, Text, Linking, Alert, Pressable } from 'react-native';
+import { View, Dimensions, ScrollView, Image, Text, Linking, SafeAreaView, Pressable } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { SafeAreaView } from 'react-native-safe-area-context';
+// import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button, Text as TextComp } from '../../Components';
 import Header from '../../Components/Header';
 import Listing from './Listing';
 import TopCategories from './TopCategories';
 import LOGO from '../../assets/MUG(2).png';
-import { HelperFunctions, Queries } from '../../Utils';
+import { Constants, HelperFunctions, Queries } from '../../Utils';
 import Carousel from './Carousel';
 
 const { width } = Dimensions.get('window');
@@ -36,7 +36,7 @@ const Home = ({ navigation, ...props }) => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       {/* <Header {...props} /> */}
       <View
         style={{
@@ -48,8 +48,11 @@ const Home = ({ navigation, ...props }) => {
         }}
       >
         <View>
-          <TextComp text="Welcome to," extStyles={{ fontSize: RFValue(20) }} />
-          <TextComp text="MildMay Uganda" extStyles={{ fontSize: RFValue(25), fontWeight: '700', color: 'green' }} />
+          {/* <TextComp text="Welcome to," extStyles={{ fontSize: RFValue(20) }} /> */}
+          <TextComp
+            text="MildMay Uganda"
+            extStyles={{ fontSize: RFValue(25), fontWeight: '700', color: Constants.darkGreen }}
+          />
         </View>
         <Pressable
           style={{
@@ -58,7 +61,7 @@ const Home = ({ navigation, ...props }) => {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: RFValue(25),
-            backgroundColor: '#1c7c54'
+            backgroundColor: Constants.darkGreen
           }}
           onPress={() => navigation.toggleDrawer()}
         >
@@ -141,7 +144,7 @@ const Home = ({ navigation, ...props }) => {
         {/* {state.topPosts && <Listing title="MyaPlus Latest Posts" data={state.topPosts} />}
         <Listing title="MyaPlus Top Posts" data={doctors} /> */}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

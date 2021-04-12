@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, Platform } from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +16,9 @@ const PasswordInput = ({
   const El = React.useRef(null);
 
   React.useEffect(() => {
-    El.current.setNativeProps({ style: { fontFamily: 'Roboto-Regular' } });
+    if (Platform.OS === 'android') {
+      El.current.setNativeProps({ style: { fontFamily: 'Roboto-Regular' } });
+    }
   }, []);
 
   return (

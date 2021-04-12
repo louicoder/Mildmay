@@ -8,7 +8,6 @@ export const getSingleDoc = async (collection, docId, callback) => {
     .doc(docId)
     .get()
     .then((doc) => {
-      console.log('User details', doc.data());
       callback({ error: null, doc: doc.data() });
     })
     .catch((error) => callback({ error, doc: null }));
@@ -21,7 +20,6 @@ export const getMultipleDocs = async (collection, where, callback) => {
       ? await DB.collection(collection).where('accountType', '==', 'Doctor').get()
       : await DB.collection(collection).get();
     const docs = [ ...query.docs.map((doc) => ({ ...doc.data(), id: doc.id })) ];
-    // console.log('User details', doc.data());
     return callback({ error: null, doc: docs });
   } catch (error) {
     return callback({ error, doc: null });
@@ -80,22 +78,6 @@ export const collectionRealTime = (collection, callback) => {
   }
 };
 
-// export const subcollectionRealTime = (collection, docId, subCollection, callback) => {
-//   try {
-//     DB.collection(collection).doc(docId).collection(subCollection).onSnapshot((response) => {
-//       if (response.docs) {
-//         let docs = [];
-//         for (const doc of response.docs) {
-//           docs.push({ ...doc.data(), id: doc.id });
-//         }
-//         callback({ error: null, docs });
-//       }
-//     });
-//   } catch (error) {
-//     callback({ error, docs: null });
-//   }
-// };
-
 export const documentRealTime = (collection, docId, callback) => {
   try {
     DB.collection(collection).doc(docId).onSnapshot((response) => {
@@ -112,7 +94,6 @@ export const updateDoc = async (collection, docId, payload, callback) => {
   await DB.doc(`${collection}/${docId}`)
     .set(payload, { merge: true })
     .then(async (resp) => {
-      console.log('REsp from update', resp);
       await DB.doc(`${collection}/${docId}`).get().then((snapshot) => callback({ error: null, doc: snapshot.data() }));
     })
     .catch((error) => callback({ error, doc: null }));

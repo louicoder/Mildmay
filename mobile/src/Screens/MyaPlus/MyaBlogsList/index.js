@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ScrollView, Pressable, Alert, Platform } from 'react-native';
+import { View, Text, FlatList, ScrollView, Pressable, Alert, SafeAreaView } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Constants } from '../../../Utils';
@@ -7,7 +7,7 @@ import BlogList from './BlogList';
 
 const MyaBlogsList = ({ navigation }) => {
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Pressable
         style={{
           // height: RFValue(50),
@@ -32,7 +32,7 @@ const MyaBlogsList = ({ navigation }) => {
         style={{
           width: '100%',
           // height: RFValue(50),
-          paddingVertical: RFValue(15),
+          paddingVertical: RFValue(10),
           flexDirection: 'row',
           paddingHorizontal: RFValue(10),
           justifyContent: 'space-between',
@@ -61,7 +61,7 @@ const MyaBlogsList = ({ navigation }) => {
       <View style={{ flexGrow: 1 }}>
         <BlogList navigation={navigation} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

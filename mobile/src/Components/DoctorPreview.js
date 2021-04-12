@@ -15,9 +15,7 @@ const DoctorPreview = ({ navigation, setLoading, ...rest }) => {
 
     const uid = auth().currentUser.uid;
     const followers = followed ? rest.followers.filter((follower) => follower !== uid) : [ ...rest.followers, uid ];
-    // console.log('followers', followers);
     await Queries.updateDoc('Users', rest.uid, { followers }, (resp) => {
-      // console.log('Rspponse from following');
       setLoading(false);
     });
   };
@@ -30,16 +28,15 @@ const DoctorPreview = ({ navigation, setLoading, ...rest }) => {
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between'
-        // borderWidth: 1
       }}
       onPress={() => navigation.navigate('DoctorProfile', rest)}
     >
-      <View style={{ width: RFValue(60), flexDirection: 'row', width: '80%' }}>
+      <View style={{ width: RFValue(60), flexDirection: 'row', width: '80%', alignItems: 'center' }}>
         <Image
           source={{
             uri: rest.imageUrl || Constants.PROFILE_IMAGE
           }}
-          style={{ width: RFValue(60), height: RFValue(60), borderRadius: RFValue(10) }}
+          style={{ width: RFValue(50), height: RFValue(50), borderRadius: RFValue(60) }}
           resizeMode="cover"
         />
         <View style={{ paddingLeft: RFValue(10), width: '80%' }}>
@@ -54,13 +51,11 @@ const DoctorPreview = ({ navigation, setLoading, ...rest }) => {
           </Text>
         </View>
       </View>
-      <Pressable onPress={followUnfollowHandler} style={styles.followContainer}>
-        <Icon
-          name={followed ? 'account-multiple-minus-outline' : 'account-multiple-plus-outline'}
-          size={RFValue(25)}
-          color="green"
-        />
-      </Pressable>
+      {!followed && (
+        <Pressable onPress={followUnfollowHandler} style={styles.followContainer}>
+          <Icon name="account-multiple-plus-outline" size={RFValue(25)} color="green" />
+        </Pressable>
+      )}
     </Pressable>
   );
 };

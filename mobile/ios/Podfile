@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'mobile' do
+target 'Mildmay' do
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
   
@@ -13,7 +13,7 @@ target 'mobile' do
   pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
 
 
-  target 'mobileTests' do
+  target 'MildmayTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -28,10 +28,10 @@ target 'mobile' do
   # end
 end
 
-target 'mobile-tvOS' do
-  # Pods for mobile-tvOS
+target 'Mildmay-tvOS' do
+  # Pods for Mildmay-tvOS
 
-  target 'mobile-tvOSTests' do
+  target 'Mildmay-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

@@ -11,6 +11,7 @@ import MyaBlogsList from './MyaPlus/MyaBlogsList';
 import Blog from './MyaPlus/Blog';
 import EditAccount from './EditAccount';
 import SingleDoctorProfile from './SingleDoctorProfile';
+import Reviews from './Reviews';
 
 export {
   Home,
@@ -25,5 +26,6 @@ export {
   MyaBlogsList,
   Blog,
   EditAccount,
-  SingleDoctorProfile
+  SingleDoctorProfile,
+  Reviews
 };

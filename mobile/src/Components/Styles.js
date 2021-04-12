@@ -16,5 +16,13 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     // alignItems: 'center',
     margin: 0
+  },
+  header: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    height: RFValue(55),
+    alignItems: 'center',
+    paddingHorizontal: RFValue(10)
   }
 });

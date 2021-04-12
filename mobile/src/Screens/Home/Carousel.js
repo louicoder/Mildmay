@@ -7,22 +7,32 @@ const { width } = Dimensions.get('window');
 
 const Carousel = () => {
   const flatListRef = React.useRef();
-  const [ state, setState ] = React.useState(0);
+  const [ timer, setTimer ] = React.useState(0);
+
+  // useEffect(() => {
+  //   effect
+  //   return () => {
+  //     cleanup
+  //   }
+  // }, [input])
+
   React.useEffect(
     () => {
       const subscribe = setInterval(() => {
-        if (state < 3) {
-          flatListRef.current.scrollToIndex({ index: state });
-          console.log('indexing---...', state);
+        // if (!timer) return;
+        if (timer < 3) {
+          flatListRef.current.scrollToIndex({ index: timer });
+          console.log('indexing---...', timer);
         }
-        const newState = state + 1;
-        setState(newState);
-      }, 5000);
+        const newTimer = timer + 1;
+        setTimer(newTimer);
+      }, 3000);
 
       return () => clearInterval(subscribe);
     },
-    [ state ]
+    [ timer ]
   );
+
   return (
     <FlatList
       style={{ marginBottom: RFValue(10) }}
@@ -33,12 +43,7 @@ const Carousel = () => {
       showsHorizontalScrollIndicator={false}
       data={[ 'green', 'orange', 'black' ]}
       onEndReachedThreshold={0.9}
-      onEndReached={() => {
-        setState(0);
-        // setTimeout(() => {
-        //   // flatListRef.current.scrollToIndex({ index: 0 });
-        // }, 3000);
-      }}
+      onEndReached={() => setTimer(0)}
       renderItem={({ item }) => (
         <View
           style={{

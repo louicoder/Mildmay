@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, SafeAreaView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -47,7 +47,7 @@ const EditAccount = ({ navigation }) => {
     });
   };
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LoadingModal visible={state.isLoading} />
       <Header title="Edit your profile" navigation={navigation} />
       <KeyboardAwareScrollView
@@ -210,7 +210,7 @@ const EditAccount = ({ navigation }) => {
           />
         </View>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -50,7 +50,7 @@ const MyaPlus = ({ navigation, route: { params } }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <LoadingModal visible={loading} />
       <View style={{ flexGrow: 1 }}>
         <Comments {...blog} setLoading={setLoading} />
@@ -102,7 +102,7 @@ const MyaPlus = ({ navigation, route: { params } }) => {
           <Icon name="send" size={RFValue(25)} color="#aaa" />
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

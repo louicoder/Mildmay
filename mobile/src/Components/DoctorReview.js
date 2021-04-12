@@ -1,33 +1,40 @@
+import moment from 'moment';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-const DoctorReview = () => {
+const DoctorReview = ({
+  last,
+  userInfo,
+  review,
+  dateCreated,
+  ...rest
+}) => {
+  console.log('USER IFNO', rest.userInfo?.name);
   return (
     <View
       style={{
-        marginBottom: RFValue(15),
+        marginBottom: RFValue(20),
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: RFValue(10),
-        width: '100%'
+        width: '100%',
+        paddingBottom: last ? RFValue(60) : 0
         // borderWidth: 1
       }}
     >
-      <Image
-        source={{
-          uri: 'https://post.greatist.com/wp-content/uploads/2020/09/Black_Male_Doctor_Portrait_732x549-thumbnail.jpg'
-        }}
+      <View style={{width: '15%'}}>
+        <Image
+        source={{ uri: userInfo?.imageUrl }}
         style={{ width: RFValue(30), height: RFValue(30), borderRadius: RFValue(50) }}
       />
-      <View style={{ flexShrink: 1, paddingLeft: RFValue(10) }}>
-        <Text style={{ fontSize: RFValue(14), fontWeight: 'bold' }}>Reviewer's name</Text>
-        <Text style={{ fontSize: RFValue(12), color: '#aaa', marginBottom: RFValue(5) }}>20 mins ago</Text>
-        <Text style={{ fontSize: RFValue(14) }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quod proximum fuit non vidit. Tum ille timide vel
-          potius verecunde: Facio, inquit. Videamus igitur sententias eorum, tum ad verba redeamus. Sed quanta sit
-          alias, nunc tantum possitne esse tanta. Duo Reges: constructio interrete. Itaque contra est, ac dicitis;
+      </View>
+      <View style={{ flexGrow: 1, paddingLeft: RFValue(10), width:'85%' }}>
+        <Text style={{ fontSize: RFValue(14), fontWeight: 'bold' }}>{userInfo?.name || userInfo?.username || userInfo?.email}</Text>
+        <Text style={{ fontSize: RFValue(12), color: '#aaa', marginBottom: RFValue(5) }}>
+          {moment(dateCreated).fromNow()}
         </Text>
+        <Text style={{ fontSize: RFValue(12) }}>{review}</Text>
       </View>
     </View>
   );

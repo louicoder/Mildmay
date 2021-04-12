@@ -60,3 +60,5 @@ buck-out/
 
 # ignore keys for firebase
 /android/app/google-services.json
+
+/ios/GoogleService-Info.plist

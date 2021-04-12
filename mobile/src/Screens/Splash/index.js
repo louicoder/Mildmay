@@ -11,9 +11,8 @@ const Splash = ({ navigation: { navigate } }) => {
   const [ state, setState ] = React.useState({ loading: false });
   const loading = useSelector((state) => state.loading.effects.Account);
   const dispatch = useDispatch();
-  // console.log('Dispatch', auth().currentUser);
+
   useEffect(() => {
-    console.log('Auht', auth().currentUser);
     if (auth().currentUser && auth().currentUser.uid) getUserDetails();
     else navigate('Login');
   }, []);
@@ -23,10 +22,8 @@ const Splash = ({ navigation: { navigate } }) => {
     await dispatch.Account.getUserDetails({
       uid: auth().currentUser.uid,
       callback: (resp) => {
-        console.log('Resp from getting user details', resp);
         if (!resp.success) {
           setState({ ...state, loading: false });
-          // Alert.alert('Error', error);
           return navigate('Login');
         }
         setState({ ...state, loading: false });

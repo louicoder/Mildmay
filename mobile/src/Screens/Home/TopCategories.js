@@ -15,7 +15,8 @@ const TopCategories = ({ title }) => {
           width: '100%',
           flexDirection: 'row',
           flexWrap: 'wrap',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          marginBottom: RFValue(5)
         }}
       >
         {[
@@ -45,10 +46,10 @@ const TopCategories = ({ title }) => {
             key={HelperFunctions.keyGenerator()}
             style={{
               width: '32%',
-              borderWidth: 1,
+              // borderWidth: 1,
               borderColor: '#eee',
               height: RFValue(100),
-              marginBottom: RFValue(5),
+              marginBottom: RFValue(7),
               alignItems: 'center'
             }}
             onPress={() => alert('yes')}

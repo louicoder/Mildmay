@@ -1,6 +1,9 @@
 import { launchImageLibrary } from 'react-native-image-picker';
 import { check, PERMISSIONS, request } from 'react-native-permissions';
 import Storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+
+const DB = firestore();
 
 export const keyGenerator = () => Math.random().toString(36).slice(2);
 
@@ -102,4 +105,18 @@ export const uploadImage = async (storagePath, imagePath, setProgress, setError,
       });
     }
   );
+};
+
+export const addUsersInfoToArray = async (array, field = 'uid', callback) => {
+  try {
+    const userIds = [ ...array.map((usr) => usr[field]) ];
+    console.log('User ids', userIds);
+    const userData = await DB.collection('Users').where('uid', 'in', userIds).get();
+    const users = [ ...userData.docs.map((user) => ({ ...user.data(), uid: user.id })) ];
+    const finalArray = array.map((usr) => ({ ...usr, userInfo: users.find((usx) => usx.uid === usr[field]) }));
+
+    return callback({ doc: finalArray, error: undefined });
+  } catch (error) {
+    return callback({ error: error.message, doc: undefined });
+  }
 };

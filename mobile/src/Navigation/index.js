@@ -20,7 +20,8 @@ import {
   Blog,
   MyaBlogsList,
   EditAccount,
-  SingleDoctorProfile
+  SingleDoctorProfile,
+  Reviews
 } from '../Screens';
 import IconComp from '../Components/Icon';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,6 +32,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import Drawer from '../Screens/Drawer';
 import FinishRegistration from '../Screens/FinishRegistration';
 import Splash from '../Screens/Splash';
+import { Constants } from '../Utils';
 
 const Stacks = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -77,6 +79,7 @@ const DoctorScreens = () => (
   <DoctorStack.Navigator screenOptions={{}}>
     <DoctorStack.Screen name="Doctors" component={Doctors} />
     <DoctorStack.Screen name="DoctorProfile" component={SingleDoctorProfile} />
+    <DoctorStack.Screen name="Reviews" component={Reviews} />
   </DoctorStack.Navigator>
 );
 
@@ -94,7 +97,7 @@ function MyTabs () {
       screenOptions={{}}
       shifting={false}
       // labeled={false}
-      barStyle={{ backgroundColor: 'green' }}
+      barStyle={{ backgroundColor: Constants.darkGreen, zIndex: 20 }}
       style={{ justifyContent: 'space-between' }}
     >
       <Tab.Screen

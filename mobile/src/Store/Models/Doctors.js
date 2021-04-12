@@ -30,6 +30,34 @@ export default {
       } catch (error) {
         return callback({ error: error.message });
       }
+    },
+
+    // created new appointment
+    async createAppointment ({ payload, callback }) {
+      try {
+        await Queries.createDoc('Appointments', payload, callback);
+      } catch (error) {
+        return callback({ error: error.message });
+      }
+    },
+
+    // cancel appointment
+    async cancelAppointment ({ payload, docId, callback }) {
+      try {
+        await Queries.updateDoc('Appointments', docId, payload, callback);
+      } catch (error) {
+        return callback({ error: error.message });
+      }
+    },
+
+    // Post review for doctor
+    async postReview ({ payload, callback }) {
+      console.log('Pos review payload', payload);
+      try {
+        await Queries.createDoc('Reviews', payload, callback);
+      } catch (error) {
+        return callback({ error: error.message });
+      }
     }
   })
 };

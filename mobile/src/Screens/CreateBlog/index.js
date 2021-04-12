@@ -9,9 +9,8 @@ import { Constants, HelperFunctions, Queries } from '../../Utils';
 // import Firebase from '../../Utils/Firebase';
 import { ImagePicker } from '../../Utils/HelperFunctions';
 import Firestore from '@react-native-firebase/firestore';
-import Storage from '@react-native-firebase/storage';
 import { useSelector } from 'react-redux';
-import { Utils } from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
 
 const DB = Firestore();
 
@@ -80,7 +79,8 @@ const BlogPost = ({ navigation }) => {
         timeStamp: Firestore.FieldValue.serverTimestamp(),
         likes: [],
         comments: [],
-        userInfo: { email: user.email, imageUrl: user.profileImage || Constants.PROFILE_IMAGE }
+        // userInfo: { email: user.email, imageUrl: user.profileImage || Constants.PROFILE_IMAGE }
+        uid: auth().currentUser.uid
       },
       ({ error, doc }) => {
         if (error) return Alert.alert(error);
