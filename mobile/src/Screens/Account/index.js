@@ -44,7 +44,7 @@ const Account = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ width: '100%', alignItems: 'center', paddingVertical: RFValue(10), marginTop: '10%' }}>
+      <View style={{ width: '100%', alignItems: 'center', paddingVertical: RFValue(10), marginTop: RFValue(10) }}>
         <LoadingModal visible={state.isLoading} />
         <ImageBackground
           source={{
@@ -77,26 +77,12 @@ const Account = ({ navigation }) => {
         </View>
       </View>
 
+      {/* Statistics */}
+      <View />
+      {/* End Statistics */}
+
       <ScrollView style={{ flexGrow: 1 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
-          {/* {[ 'instagram', 'facebook', 'whatsapp', 'cog' ].map((name) => (
-            <Ripple
-              rippleCentered
-              style={{
-                width: RFValue(50),
-                height: RFValue(50),
-                alignItems: 'center',
-                justifyContent: 'center',
-                // borderWidth: RFValue(1),
-                backgroundColor: '#eee',
-                // borderColor: '#aaa',
-                marginHorizontal: RFValue(5),
-                borderRadius: RFValue(3)
-              }}
-            >
-              <Icon name={name} size={RFValue(30)} color="#010203" />
-            </Ripple>
-          ))} */}
           <Pressable
             onPress={() => navigation.navigate('EditAccount')}
             style={{
