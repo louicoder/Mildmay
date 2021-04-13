@@ -15,12 +15,12 @@ export default StyleSheet.create({
     width: '75%',
     backgroundColor: '#fff',
     // height: '100%',
-    minHeight: RFValue(50),
-    maxHeight: RFValue(100),
+    height: RFValue(40),
+    // maxHeight: RFValue(100),
     backgroundColor: '#eee',
     paddingHorizontal: RFValue(10),
     paddingTop: Platform.OS === 'ios' ? RFValue(10) : 0,
-    fontSize: RFValue(12)
+    fontSize: RFValue(13)
   },
   postText: { fontSize: RFValue(14), color: Constants.green }
 });

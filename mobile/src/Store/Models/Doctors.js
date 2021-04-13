@@ -23,6 +23,14 @@ export default {
       }
     },
 
+    async getDoctor ({ uid, callback }) {
+      try {
+        await Queries.getSingleDoc('Users', uid, callback);
+      } catch (error) {
+        return callback({ error: error.message });
+      }
+    },
+
     // follow and unfollow user
     async followUnfollowUser ({ collection, docId, payload, callback }) {
       try {

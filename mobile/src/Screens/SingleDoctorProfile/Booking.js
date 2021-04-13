@@ -32,10 +32,6 @@ const Booking = ({ bookAppointment, ...props }) => {
         paddingHorizontal: RFValue(10)
       }}
     >
-      {/* <Text style={{ fontSize: RFValue(16), fontWeight: 'bold', paddingVertical: RFValue(15) }}>
-        Enter appointment details
-      </Text> */}
-
       <Pressable
         style={styles.descText}
         onPressIn={() => {
@@ -60,7 +56,6 @@ const Booking = ({ bookAppointment, ...props }) => {
             enableSwipeMonths={true}
             onDayPress={({ dateString }) => {
               setState({ ...state, date: moment(dateString).toISOString() });
-              // setDate(dateString);
             }}
             markingType="multi-dot"
             markedDates={{
@@ -158,6 +153,7 @@ const Booking = ({ bookAppointment, ...props }) => {
           return bookAppointment(payload);
         }}
       />
+      <View style={{ height: 20 }} />
     </View>
   );
 };

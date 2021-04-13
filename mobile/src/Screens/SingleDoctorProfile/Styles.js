@@ -22,7 +22,6 @@ export default StyleSheet.create({
   },
   profText: {
     paddingVertical: RFValue(8),
-    // paddingHorizontal: RFValue(10),
     backgroundColor: '#eee',
     borderRadius: RFValue(50),
     fontSize: RFValue(12),
@@ -30,12 +29,9 @@ export default StyleSheet.create({
   },
   reviewsContainer: {
     flexDirection: 'row',
-    // paddingHorizontal: RFValue(10),
     justifyContent: 'space-between',
     marginVertical: RFValue(20),
     alignItems: 'center',
-    // borderTopWidth: 1,
-    // paddingTop: RFValue(20),
     borderTopColor: '#eee'
   },
   allReviewsBtn: {

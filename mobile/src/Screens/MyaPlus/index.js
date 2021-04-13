@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Image, Pressable } from 'react-native';
+import { View, Text, TextInput, Image, Pressable, SafeAreaView } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LoadingModal from '../../Components/LoadingModal';
@@ -7,6 +7,7 @@ import { Constants, Queries } from '../../Utils';
 import Comments from './Comments';
 import firestore from '@react-native-firebase/firestore';
 import { useSelector } from 'react-redux';
+import { Header } from '../../Components';
 
 const MyaPlus = ({ navigation, route: { params } }) => {
   const [ blog, setBlog ] = React.useState({});
@@ -52,6 +53,7 @@ const MyaPlus = ({ navigation, route: { params } }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LoadingModal visible={loading} />
+      <Header navigation={navigation} title="Blog Details" />
       <View style={{ flexGrow: 1 }}>
         <Comments {...blog} setLoading={setLoading} />
       </View>
