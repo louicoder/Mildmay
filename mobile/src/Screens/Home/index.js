@@ -70,7 +70,7 @@ const Home = ({ navigation, ...props }) => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} style={{}}>
-        <Carousel />
+        {state && <Carousel />}
         <View
           style={{
             flexDirection: 'row',
@@ -149,41 +149,3 @@ const Home = ({ navigation, ...props }) => {
 };
 
 export default Home;
-
-const doctors = [
-  {
-    name: 'Stuart Kalema',
-    profession: 'Cardiologist',
-    image:
-      'https://lh3.googleusercontent.com/proxy/V5NHmm06YSsml2RfnSdJ0JRY5zhECo3xyET3zD3-abki1Vfbu7zcJJnJUAu_xU3wJIElpbo8Rl6WI8jxe4Q_y7z8KIcG3om7OH4DdNQtKfwqjih0LPep-xgDLZQGnzL-aA'
-  },
-  {
-    name: 'Lovis Michelle',
-    profession: 'Colorectal Surgeon',
-    image:
-      'https://www.abortionclinicpta.co.za/wp-content/uploads/2020/03/35128260-african-american-medical-doctor-man-isolated-white-background.jpg'
-  },
-  {
-    name: 'DEnnis  Kaggwa',
-    profession: 'Optician',
-    image:
-      'https://i.dlpng.com/static/png/1417044-the-new-york-department-of-education-is-seeking-to-prohibit-approved-caribbean-medical-schools-from-entering-black-doctor-png-570_439_preview.png'
-  },
-  {
-    name: 'Peter SSematimba Kalema',
-    profession: 'Dentist',
-    image:
-      'https://a9p9n2x2.stackpathcdn.com/wp-content/blogs.dir/1/files/2016/01/BE_female-doctor-natural-hair-shutterstock.jpg'
-  },
-  {
-    name: 'Robert Kyagulanyi',
-    profession: 'NeuroSurgeon',
-    image: 'https://womeninwhitecoats.com/wp-content/uploads/2020/02/IMG_0414-1080x675.jpg'
-  },
-  {
-    name: 'Denns tunirawo Kalema',
-    profession: 'Peditircian',
-    image:
-      'https://media3.s-nbcnews.com/j/newscms/2016_41/1750656/161014-cross-cr-0745_45b7d9df3bb4a75a7362bed306f4bdd3.fit-760w.jpg'
-  }
-];

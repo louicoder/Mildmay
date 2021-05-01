@@ -16,14 +16,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Constants, HelperFunctions } from '../../Utils';
 import moment from 'moment';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-import styles from './Styles';
+import styles from '../SingleDoctorProfile/Styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { Button, Header } from '../../Components';
 import auth from '@react-native-firebase/auth';
 import LoadingModal from '../../Components/LoadingModal';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Booking = ({ navigation, route: { params: profile }, ...props }) => {
+const Booking = ({ navigation, route: { params }, ...props }) => {
   const loading = useSelector((state) => state.loading.effects.Doctors);
   const dispatch = useDispatch();
   const inputRef = React.useRef(null);
@@ -33,46 +33,122 @@ const Booking = ({ navigation, route: { params: profile }, ...props }) => {
     calShowing: true,
     description: '',
     date: new Date().toISOString(),
-    ...profile
+    ...params
   });
 
-  const bookAppointment = () => {
-    Keyboard.dismiss();
-    const { date, time, description, uid, ...rest } = state;
-    const payload = {
-      date,
-      description,
-      time,
-      dateCreated: new Date().toISOString(),
-      doctorId: uid,
-      patientId: auth().currentUser.uid,
-      confirmed: false
-    };
-
-    try {
-      dispatch.Doctors.createAppointment({
-        payload,
-        callback: ({ error, doc }) => {
-          if (error) {
-            setState({ ...state, loading: false });
-            return Alert.alert('Error booking appointment', error);
-          }
-          setState({ ...state, loading: false });
-          // return Alert.alert('Success', 'Successfully created your appointment with the doctor appointment', error);
-          return navigation.goBack();
+  const cancelAppointment = () => {
+    dispatch.Account.cancelAppointment({
+      appointId: params.id,
+      callback: (res) => {
+        if (!res.error) {
+          return Alert.alert(
+            'Error cancelling appointment',
+            'Something went wrong while trying to cancel appointment, try again'
+          );
         }
-      });
-    } catch (error) {
-      setState({ ...state, loading: false });
-      return Alert.alert('Error booking appointment', error.message);
-    }
+        return navigation.goBack();
+      }
+    });
   };
+
+  const confirmAppointment = () => {
+    dispatch.Account.confirmAppointment({
+      appointId: params.id,
+      callback: (res) => {
+        if (res.error) {
+          return Alert.alert(
+            'Error confirm appointment',
+            'Something went wrong while trying to cancel appointment, try again'
+          );
+        }
+        return navigation.goBack();
+      }
+    });
+  };
+
+  const rescheduleAppointment = () => {
+    const { date, time, description } = state;
+    dispatch.Account.rescheduleAppointment({
+      appointId: params.id,
+      payload: { date, time, description },
+      callback: (res) => {
+        if (res.error) {
+          return Alert.alert(
+            'Error confirm appointment',
+            'Something went wrong while trying to cancel appointment, try again'
+          );
+        }
+        return navigation.goBack();
+      }
+    });
+  };
+
+  const confirm = (callback, msg) =>
+    Alert.alert('Confirm Action', msg, [
+      {
+        text: 'Cancel',
+        onPress: () => {
+          return;
+        },
+        style: 'cancel'
+      },
+      { text: 'OK', onPress: callback }
+    ]);
 
   return (
     <React.Fragment>
-      <LoadingModal visible={loading.createAppointment} />
-      <SafeAreaView style={{ flex: 1 }}>
+      <LoadingModal
+        visible={loading.cancelAppointment || loading.confirmAppointment || loading.rescheduleAppointment}
+      />
+      <View style={{ flex: 1 }}>
         <Header title="Appointment details" navigation={navigation} />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: RFValue(20),
+            // right: RFValue(10),
+            // width: '100%',
+            // borderWidth: 1,
+            // height: RFValue(20),
+            zIndex: 1000,
+            paddingHorizontal: RFValue(10),
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            alignSelf: 'flex-end'
+          }}
+        >
+          {!state.confirmed &&
+          state.doctorId === auth().currentUser.uid && (
+            <Pressable
+              onPress={() => confirm(confirmAppointment, 'Are you sure you would like to confirm this appointment')}
+              style={{
+                backgroundColor: 'green',
+                width: RFValue(50),
+                height: RFValue(50),
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: RFValue(50),
+                marginRight: RFValue(10)
+              }}
+            >
+              <Icon name="check" size={RFValue(30)} color="#fff" />
+            </Pressable>
+          )}
+          <Pressable
+            onPress={() => confirm(cancelAppointment, 'Are you sure you want cancel this appointment')}
+            style={{
+              backgroundColor: 'red',
+              width: RFValue(50),
+              height: RFValue(50),
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: RFValue(50)
+            }}
+          >
+            <Icon name="close" size={RFValue(30)} color="#fff" />
+          </Pressable>
+        </View>
 
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
@@ -81,7 +157,7 @@ const Booking = ({ navigation, route: { params: profile }, ...props }) => {
           style={{
             width: '100%',
             backgroundColor: '#fff',
-            paddingBottom: useSafeAreaInsets().bottom,
+            // paddingBottom: useSafeAreaInsets().bottom,
             paddingHorizontal: RFValue(10)
           }}
         >
@@ -168,7 +244,7 @@ const Booking = ({ navigation, route: { params: profile }, ...props }) => {
             scrollEnabled={false}
             style={{
               backgroundColor: '#eee',
-              height: RFValue(250),
+              height: RFValue(150),
               // minHeight: RFValue(50),
               padding: RFValue(10),
               paddingTop: Platform.OS === 'ios' ? RFValue(10) : 0,
@@ -178,20 +254,20 @@ const Booking = ({ navigation, route: { params: profile }, ...props }) => {
             value={state.description}
             multiline
             ref={inputRef}
-            // onFocus={() => setState({ ...state, timeShowing: false, calShowing: false })}
+            onFocus={() => setState({ ...state, calShowing: false })}
             onBlur={() => Keyboard.dismiss()}
             onChangeText={(description) => setState({ ...state, description })}
           />
 
           <Button
-            title="Book Appointment"
-            extStyles={{ borderWidth: 0, backgroundColor: Constants.darkGreen }}
+            title="Update Appointment"
+            extStyles={{ borderWidth: 0, backgroundColor: Constants.darkGreen, marginBottom: RFValue(50) }}
             textStyles={{ color: '#fff' }}
-            onPressIn={bookAppointment}
+            onPressIn={rescheduleAppointment}
           />
           <View style={{ height: 20 }} />
         </KeyboardAwareScrollView>
-      </SafeAreaView>
+      </View>
     </React.Fragment>
   );
 };

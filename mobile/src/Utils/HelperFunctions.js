@@ -22,7 +22,7 @@ export const CheckPermissions = async (permission, callback) => {
       switchPermissionResult(result, permission, callback);
     })
     .catch((error) => {
-      console.log('erro in permissions', error.message);
+      // console.log('erro in permissions', error.message);
       return { error };
     });
 };
@@ -30,7 +30,7 @@ export const CheckPermissions = async (permission, callback) => {
 export const requestPermission = async (permission) => {
   try {
     await request(permission).then((result) => {
-      console.log('PERMISSION', permission);
+      // console.log('PERMISSION', permission);
       switchPermissionResult(result, permission);
     });
   } catch (error) {
@@ -95,7 +95,7 @@ export const uploadImage = async (storagePath, imagePath, setProgress, setError,
   uploadTask.on(
     'state_changed',
     (snapshot) => {
-      console.log('Progress ------', snapshot.bytesTransferred / snapshot.totalBytes * 100);
+      // console.log('Progress ------', snapshot.bytesTransferred / snapshot.totalBytes * 100);
       setProgress(Math.ceil(snapshot.bytesTransferred / snapshot.totalBytes * 100));
     },
     (error) => setError(error),
@@ -110,7 +110,7 @@ export const uploadImage = async (storagePath, imagePath, setProgress, setError,
 export const addUsersInfoToArray = async (array, field = 'uid', callback) => {
   try {
     const userIds = [ ...array.map((usr) => usr[field]) ];
-    console.log('User ids', userIds);
+    // console.log('User ids', userIds);
     const userData = await DB.collection('Users').where('uid', 'in', userIds).get();
     const users = [ ...userData.docs.map((user) => ({ ...user.data(), uid: user.id })) ];
     const finalArray = array.map((usr) => ({ ...usr, userInfo: users.find((usx) => usx.uid === usr[field]) }));
@@ -119,4 +119,14 @@ export const addUsersInfoToArray = async (array, field = 'uid', callback) => {
   } catch (error) {
     return callback({ error: error.message, doc: undefined });
   }
+};
+
+// Splits array of n-size into size of 10 since its the limit for firestore in operator in the above function
+const getArraychunks = (array, size) => {
+  var results = [];
+  while (array.length) {
+    results.push(array.splice(0, size));
+  }
+  // console.log('CHUNK', results);
+  return results;
 };

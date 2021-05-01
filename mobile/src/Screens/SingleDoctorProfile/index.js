@@ -19,7 +19,9 @@ const Profile = (props) => {
   // const { user: doctor } = useSelector((state) => state.Account);
   const dispatch = useDispatch();
   const { createAppointment: CA, getDoctor: GD } = useSelector((state) => state.loading.effects.Doctors);
-  const [ state, setState ] = React.useState({ modalVisible: false, ...props.route.params, loading: false });
+  const [ state, setState ] = React.useState({ modalVisible: false, loading: false, ...props.route.params });
+
+  console.log('Iamage params', props.route.params.imageUrl);
 
   const bookAppointment = (payload) => {
     setState({ ...state, loading: true, modalVisible: false });
@@ -28,10 +30,14 @@ const Profile = (props) => {
         payload,
         callback: ({ error, doc }) => {
           if (error) return Alert.alert('Error booking appointment', error);
+          setState({ ...state, loading: false });
+
           return Alert.alert('Success', 'Successfully created your appointment with the doctor appointment', error);
         }
       });
     } catch (error) {
+      setState({ ...state, loading: false });
+
       return Alert.alert('Error booking appointment', error.message);
     }
   };
@@ -61,17 +67,20 @@ const Profile = (props) => {
 
         <ScrollView style={{ flex: 1, paddingHorizontal: RFValue(10) }} showsVerticalScrollIndicator={false}>
           <HeaderComponent
-            {...state}
+            profile={props.route.params}
             showModal={() => setState({ ...state, modalVisible: true })}
-            {...props}
+            navigation={props.navigation}
             setLoading={(loading) => setState({ ...state, loading })}
             getDoctorDetails={getUpdateDoctorDetails}
           />
           <View style={{}}>
+            <Text />
             <Text style={{ fontSize: RFValue(16), fontWeight: 'bold', marginBottom: RFValue(15) }}>
               About this doctor :
             </Text>
-            <Text style={{ fontSize: RFValue(14), marginBottom: RFValue(10) }}>{state.intro}</Text>
+            <Text style={{ fontSize: RFValue(14), marginBottom: RFValue(10), color: state.intro ? '#000' : '#ccc' }}>
+              {state.intro || 'This doctor does not have any description added yet to the profile...'}
+            </Text>
           </View>
         </ScrollView>
       </SafeAreaView>

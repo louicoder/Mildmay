@@ -6,7 +6,8 @@ export default StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: RFValue(20)
     // paddingHorizontal: RFValue(10)
   },
   buttons: {
@@ -25,7 +26,9 @@ export default StyleSheet.create({
     backgroundColor: '#eee',
     borderRadius: RFValue(50),
     fontSize: RFValue(12),
-    marginRight: RFValue(5)
+    marginRight: RFValue(5),
+    paddingHorizontal: RFValue(10),
+    borderRadius: RFValue(20)
   },
   reviewsContainer: {
     flexDirection: 'row',

@@ -22,7 +22,7 @@ const BlogList = ({ navigation }) => {
 
   const setFilterHandler = React.useCallback(
     (item) => {
-      console.log('Filter', item);
+      // console.log('Filter', item);
       setFilter(item);
     },
     [ setFilter ]

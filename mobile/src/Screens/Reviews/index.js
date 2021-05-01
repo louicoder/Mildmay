@@ -51,7 +51,7 @@ const Reviews = (props) => {
       .then((snapshot) => {
         const reviews = [ ...snapshot.docs.map((snap) => ({ ...snap.data(), id: snap.id })) ];
         HelperFunctions.addUsersInfoToArray(reviews, 'uid', (response) => {
-          console.log('After adding users info', response);
+          // console.log('After adding users info', response);
           if (response.doc) setState({ ...state, reviews: response.doc });
         });
       })
@@ -69,7 +69,7 @@ const Reviews = (props) => {
     dispatch.Doctors.postReview({
       payload,
       callback: (response) => {
-        console.log('REsponse post review', response);
+        // console.log('REsponse post review', response);
         if (response.error) return Alert.alert('Error creating review', response.error);
         setState({ ...state, review: '' });
         getReviews();

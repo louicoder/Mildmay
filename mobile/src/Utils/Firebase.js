@@ -81,7 +81,7 @@ export const collectionRealTime = (collection, callback) => {
 export const documentRealTime = (collection, docId, callback) => {
   try {
     DB.collection(collection).doc(docId).onSnapshot((response) => {
-      console.log('REached here', response);
+      // console.log('REached here', response);
       if (response.data()) callback({ error: null, doc: { ...response.data(), id: response.id } });
     });
   } catch (error) {
@@ -97,4 +97,22 @@ export const updateDoc = async (collection, docId, payload, callback) => {
       await DB.doc(`${collection}/${docId}`).get().then((snapshot) => callback({ error: null, doc: snapshot.data() }));
     })
     .catch((error) => callback({ error, doc: null }));
+};
+
+export const getDocsWhere = async (collection, field, value, callback) => {
+  try {
+    const query = await DB.collection(collection).where(field, '==', value).get();
+    const docs = [ ...query.docs.map((doc) => ({ ...doc.data(), id: doc.id })) ];
+    return callback({ error: null, doc: docs });
+  } catch (error) {
+    return callback({ error, doc: null });
+  }
+};
+
+export const deleteDoc = async (collection, docId, callback) => {
+  try {
+    await DB.collection(collection).doc(docId).delete().then(() => callback({ error: undefined }));
+  } catch (error) {
+    return callback({ error, doc: null });
+  }
 };

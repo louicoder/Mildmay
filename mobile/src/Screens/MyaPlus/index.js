@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Image, Pressable, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, Image, Pressable, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LoadingModal from '../../Components/LoadingModal';
@@ -8,18 +8,19 @@ import Comments from './Comments';
 import firestore from '@react-native-firebase/firestore';
 import { useSelector } from 'react-redux';
 import { Header } from '../../Components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 const MyaPlus = ({ navigation, route: { params } }) => {
   const [ blog, setBlog ] = React.useState({});
   const [ comment, setComment ] = React.useState('');
   const [ loading, setLoading ] = React.useState(false);
-  const { user } = useSelector((state) => state.MyaPlus);
+  const { user } = useSelector((state) => state.Account);
 
-  console.log("HERE's the user", params);
+  // console.log("HERE's the user", params);
 
   React.useEffect(() => {
     const subscribe = Queries.documentRealTime(`Blogs`, params.id, (resp) => {
-      console.log('Single doc--', resp.doc);
+      // console.log('Single doc--', resp.doc);
       if (resp.doc) setBlog(resp.doc);
     });
 
@@ -28,13 +29,14 @@ const MyaPlus = ({ navigation, route: { params } }) => {
 
   const createCommentHandler = async () => {
     setLoading(true);
+    const { uid, imageUrl, email } = user;
     const dateCreated = new Date().toISOString();
     const batch = firestore().batch();
     var commentDocRef = firestore().collection('Blogs').doc(params.id);
     batch.set(
       commentDocRef,
       {
-        comments: firestore.FieldValue.arrayUnion({ dateCreated, comment, userInfo: { ...user } })
+        comments: firestore.FieldValue.arrayUnion({ dateCreated, comment, userInfo: { uid, email, imageUrl } })
       },
       { merge: true }
     );
@@ -57,6 +59,7 @@ const MyaPlus = ({ navigation, route: { params } }) => {
       <View style={{ flexGrow: 1 }}>
         <Comments {...blog} setLoading={setLoading} />
       </View>
+
       <View
         style={{
           flexDirection: 'row',
@@ -87,7 +90,7 @@ const MyaPlus = ({ navigation, route: { params } }) => {
             height: '100%'
           }}
           placeholder="Leave your comment here..."
-          multiline
+          // multiline
           value={comment}
           onChangeText={(cmt) => setComment(cmt)}
           onSubmitEditing={createCommentHandler}

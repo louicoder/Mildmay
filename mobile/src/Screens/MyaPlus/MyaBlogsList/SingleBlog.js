@@ -8,7 +8,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 const SingleBlog = React.memo(({ setLoading, navigation, ...props }) => {
-  console.log('user info');
+  // console.log('user info', props);
 
   const likeHandler = async () => {
     setLoading(true);
@@ -18,7 +18,7 @@ const SingleBlog = React.memo(({ setLoading, navigation, ...props }) => {
         : props.likes.filter((item) => item !== auth().currentUser.uid);
 
     await Queries.updateDoc('Blogs', props.id, { likes }, () => {
-      console.log('Done updating');
+      // console.log('Done updating');
       setLoading(false);
     });
   };
@@ -48,7 +48,7 @@ const SingleBlog = React.memo(({ setLoading, navigation, ...props }) => {
           />
         </Pressable>
         <View style={{ marginLeft: RFValue(10) }}>
-          <Text style={{ fontSize: RFValue(14), fontWeight: 'bold' }}>{props.email}</Text>
+          <Text style={{ fontSize: RFValue(14), fontWeight: 'bold' }}>{props.userInfo.email}</Text>
           <Text style={{ fontSize: RFValue(12), color: '#aaa' }}>{moment(props.dateCreated).fromNow()}</Text>
         </View>
       </View>

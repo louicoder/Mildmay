@@ -42,7 +42,8 @@ const Login = ({ navigation }) => {
       intro: '',
       imageUrl: Constants.PROFILE_IMAGE,
       phoneNumber: '',
-      dateJoined: new Date().toISOString()
+      dateJoined: new Date().toISOString(),
+      name: ''
     };
 
     try {

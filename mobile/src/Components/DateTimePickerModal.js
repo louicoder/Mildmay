@@ -37,9 +37,9 @@ export default ({
       // hasBackdrop={false}
       useNativeDriver
     >
-      {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : undefined}> */}
-      <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>{rest.children}</View>
-      {/* </KeyboardAvoidingView> */}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'position' : undefined}>
+        <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>{rest.children}</View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

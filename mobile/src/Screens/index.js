@@ -12,6 +12,9 @@ import Blog from './MyaPlus/Blog';
 import EditAccount from './EditAccount';
 import SingleDoctorProfile from './SingleDoctorProfile';
 import Reviews from './Reviews';
+import MyAppointments from './Account/Appointments';
+import EditAppointment from './EditAppointment';
+import Booking from './SingleDoctorProfile/Booking';
 
 export {
   Home,
@@ -27,5 +30,8 @@ export {
   Blog,
   EditAccount,
   SingleDoctorProfile,
-  Reviews
+  Reviews,
+  MyAppointments,
+  Booking,
+  EditAppointment
 };

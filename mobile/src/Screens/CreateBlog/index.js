@@ -1,5 +1,16 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, Pressable, ScrollView, ImageBackground, Alert, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  Pressable,
+  ScrollView,
+  ImageBackground,
+  Alert,
+  Keyboard,
+  Platform
+} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { PERMISSIONS } from 'react-native-permissions';
@@ -11,25 +22,27 @@ import { ImagePicker } from '../../Utils/HelperFunctions';
 import Firestore from '@react-native-firebase/firestore';
 import { useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
+import LoadingModal from '../../Components/LoadingModal';
 
 const DB = Firestore();
 
 const BlogPost = ({ navigation }) => {
-  const { user } = useSelector((state) => state.MyaPlus);
+  const { user } = useSelector((state) => state.Account);
   const [ state, setState ] = React.useState({
     caption: '',
     topics: [],
     topicsVisible: true,
     image: {},
     progress: 0,
-    progressVisible: false
+    progressVisible: false,
+    loading: false
   });
 
   const imageLoaded = () => {
     Image.getSize(
       'https://upload.wikimedia.org/wikipedia/en/2/2f/Profile_image_Nadia_Lim_chef_2014.jpg',
       (width, height) => {
-        console.log('Image size', width, height);
+        // console.log('Image size', width, height);
       }
     );
   };
@@ -38,12 +51,13 @@ const BlogPost = ({ navigation }) => {
     HelperFunctions.CheckPermissions(
       PERMISSIONS.ANDROID.CAMERA,
       ImagePicker((image) => {
-        console.log('REsponse', image);
+        // console.log('REsponse', image);
         if (image.uri) setState({ ...state, image });
       })
     );
 
   const createBlogHandler = async () => {
+    setState({ ...state, loading: true });
     if (state.image.uri) {
       await HelperFunctions.uploadImage(
         `blogs/${state.image.fileName}`,
@@ -68,7 +82,7 @@ const BlogPost = ({ navigation }) => {
   const createDocument = async (imageUrl = '') => {
     Keyboard.dismiss();
     const dateCreated = new Date().toISOString();
-    console.log('ISO String', dateCreated);
+    // console.log('ISO String', dateCreated);
     await Queries.createDoc(
       'Blogs',
       {
@@ -79,19 +93,24 @@ const BlogPost = ({ navigation }) => {
         timeStamp: Firestore.FieldValue.serverTimestamp(),
         likes: [],
         comments: [],
-        // userInfo: { email: user.email, imageUrl: user.profileImage || Constants.PROFILE_IMAGE }
+        userInfo: { email: user.email, imageUrl: user.imageUrl || Constants.PROFILE_IMAGE, uid: user.uid },
         uid: auth().currentUser.uid
       },
       ({ error, doc }) => {
-        if (error) return Alert.alert(error);
+        if (error) {
+          setState({ ...state, loading: false });
+          return Alert.alert(error);
+        }
+        setState({ ...state, loading: false });
+        Alert.alert('Success', 'Your blog post has successfully been created.');
         clearFields();
-        return navigation.navigate('MyaBlogsList');
       }
     );
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#eee' }}>
+      <LoadingModal visible={state.loading || state.progressVisible} />
       <View
         style={{
           flexDirection: 'row',
@@ -133,7 +152,12 @@ const BlogPost = ({ navigation }) => {
           />
         </Pressable>
       </View>
-      <ScrollView style={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustContentInsets={false}
+      >
         {state.image.uri ? (
           <ImageBackground
             source={{ uri: state.image.uri }}
@@ -253,11 +277,14 @@ const BlogPost = ({ navigation }) => {
           multiline
           onContentSizeChange={() => null}
           maxLength={100}
+          scrollEnabled={false}
           style={{
             marginHorizontal: RFValue(10),
             padding: RFValue(10),
             backgroundColor: '#ddd',
-            fontSize: RFValue(14)
+            fontSize: RFValue(14),
+            minHeight: RFValue(200)
+            // paddingTop: Platform.OS === 'ios' ? RFV
           }}
         />
         <Pressable
@@ -275,7 +302,7 @@ const BlogPost = ({ navigation }) => {
         >
           <Text style={{ color: '#fff', fontSize: RFValue(16) }}>Create Blog</Text>
         </Pressable>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

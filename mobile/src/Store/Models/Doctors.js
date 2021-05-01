@@ -14,7 +14,7 @@ export default {
     async getDoctors (callback) {
       try {
         DB.collection('Users').where('accountType', '==', 'Doctor').onSnapshot((response) => {
-          const docs = [ ...response.docs.map((doc) => ({ ...doc.data(), id: doc.id })) ];
+          const docs = [ ...response.docs.map((doc) => ({ ...doc.data(), uid: doc.id })) ];
           dispatch.Doctors.setDoctors(docs);
           return callback({ error: undefined, doc: docs });
         });

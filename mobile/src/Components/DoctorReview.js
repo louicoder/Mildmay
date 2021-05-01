@@ -10,7 +10,7 @@ const DoctorReview = ({
   dateCreated,
   ...rest
 }) => {
-  console.log('USER IFNO', rest.userInfo?.name);
+  // console.log('USER IFNO', rest.userInfo?.name);
   return (
     <View
       style={{

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default StyleSheet.create({
   followContainer: {

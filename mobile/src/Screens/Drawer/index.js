@@ -34,9 +34,7 @@ const Drawer = (props) => {
           style={{ width: RFValue(100), height: RFValue(100), borderRadius: 150 }}
           resizeMode="cover"
         />
-        {(user.username || user.name) && (
-          <Text style={{ fontSize: RFValue(20), fontWeight: 'bold' }}>{user.username || user.name}</Text>
-        )}
+        {user.name ? <Text style={{ fontSize: RFValue(20), fontWeight: 'bold' }}>{user.name}</Text> : null}
         <Text style={{ fontSize: RFValue(14), color: '#aaa', marginBottom: RFValue(15) }}>{user.email}</Text>
       </View>
       <ScrollView style={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>

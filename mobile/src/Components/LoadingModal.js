@@ -32,14 +32,14 @@ const LoadingModal = ({ visible = false, children }) => {
         position: 'absolute',
         // marginTop: useSafeAreaInsets().top,
         width,
-        height: '100%',
+        height,
         backgroundColor: 'rgba(0,0,0,.85)',
         zIndex: 10000,
         alignItems: 'center',
         justifyContent: 'center'
       }}
     >
-      <Text style={{ color: '#fff', fontSize: RFValue(12) }}>Loadin, Please wait...</Text>
+      <Text style={{ color: '#fff', fontSize: RFValue(12), zIndex: 20 }}>Loadin, Please wait...</Text>
       {children}
     </View>
   ) : // </View>

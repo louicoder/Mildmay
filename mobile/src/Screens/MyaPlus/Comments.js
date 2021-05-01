@@ -99,11 +99,11 @@ const Comments = ({ id, caption, likes, dateCreated, email, imageUrl, setLoading
                 source={{
                   uri: userInfo.imageUrl || Constants.PROFILE_IMAGE
                 }}
-                style={{ width: RFValue(40), height: RFValue(40), borderRadius: RFValue(40) }}
+                style={{ width: RFValue(30), height: RFValue(30), borderRadius: RFValue(40) }}
               />
               <View>
-                <Text style={{ fontSize: RFValue(14), marginLeft: RFValue(10), fontWeight: '700' }}>{email}</Text>
-                <Text style={{ color: '#aaa', fontSize: RFValue(12), marginLeft: RFValue(10), fontWeight: 'normal' }}>
+                <Text style={{ fontSize: RFValue(12), marginLeft: RFValue(10), fontWeight: '700' }}>{email}</Text>
+                <Text style={{ color: '#aaa', fontSize: RFValue(10), marginLeft: RFValue(10), fontWeight: 'normal' }}>
                   {moment(dateCreated).fromNow()}
                 </Text>
               </View>
@@ -111,8 +111,8 @@ const Comments = ({ id, caption, likes, dateCreated, email, imageUrl, setLoading
             <Text
               style={{
                 color: 'rgba(0,0,0,.7)',
-                fontSize: RFValue(14),
-                marginLeft: RFValue(50),
+                fontSize: RFValue(12),
+                marginLeft: RFValue(40),
                 marginTop: RFValue(5)
               }}
             >

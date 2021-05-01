@@ -27,14 +27,14 @@ const Doctors = (props) => {
 
   const getDoctors = () => {
     dispatch.Doctors.getDoctors((response) => {
-      console.log('REsponse from getting doctors', response);
+      // console.log('REsponse from getting doctors', response);
     });
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Header {...props} title="Doctors" back={false} />
       <LoadingModal visible={state.isLoading} />
+      <Header {...props} title="Doctors" back={false} />
 
       <View style={{ height: RFValue(60), justifyContent: 'center' }}>
         <Filters />
@@ -47,7 +47,7 @@ const Doctors = (props) => {
         renderItem={({ item }) => (
           <DoctorPreview
             navigation={props.navigation}
-            {...item}
+            profile={item}
             setLoading={(isLoading) => setState({ ...state, isLoading })}
           />
         )}
