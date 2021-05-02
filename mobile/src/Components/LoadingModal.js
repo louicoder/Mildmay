@@ -32,7 +32,7 @@ const LoadingModal = ({ visible = false, children }) => {
         position: 'absolute',
         // marginTop: useSafeAreaInsets().top,
         width,
-        height,
+        height: '100%',
         backgroundColor: 'rgba(0,0,0,.85)',
         zIndex: 10000,
         alignItems: 'center',

@@ -24,7 +24,7 @@ import LoadingModal from '../../Components/LoadingModal';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Booking = ({ navigation, route: { params }, ...props }) => {
-  const loading = useSelector((state) => state.loading.effects.Doctors);
+  const loading = useSelector((state) => state.loading.effects.Account);
   const dispatch = useDispatch();
   const inputRef = React.useRef(null);
   const [ state, setState ] = React.useState({
@@ -94,6 +94,8 @@ const Booking = ({ navigation, route: { params }, ...props }) => {
       },
       { text: 'OK', onPress: callback }
     ]);
+
+  console.log('LOADING', loading);
 
   return (
     <React.Fragment>
@@ -242,12 +244,13 @@ const Booking = ({ navigation, route: { params }, ...props }) => {
             placeholder="Enter desciption for appointment"
             placeholderTextColor="#aaa"
             scrollEnabled={false}
+            textAlignVertical="top"
             style={{
               backgroundColor: '#eee',
               height: RFValue(150),
               // minHeight: RFValue(50),
               padding: RFValue(10),
-              paddingTop: Platform.OS === 'ios' ? RFValue(10) : 0,
+              // paddingTop: Platform.OS === 'ios' ? RFValue(10) : 0,
               fontSize: RFValue(14),
               marginBottom: RFValue(10)
             }}

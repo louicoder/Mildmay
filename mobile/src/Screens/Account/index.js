@@ -60,34 +60,37 @@ const Account = ({ navigation }) => {
       }
     });
 
-  const updatePhoto = () => {
-    HelperFunctions.ImagePicker((img) => {
-      // console.log('Image here', img);
-      setState({ ...state, image: { ...state.image, ...img } });
-      HelperFunctions.uploadImage(
-        `Profiles/${user.uid}/${img.fileName}`,
-        img.uri,
-        (progress) => setState({ ...state, progress, image: { ...state.image, ...img }, isLoading: true }),
-        (error) => console.log('Error uploading image'),
-        async (imageUrl) =>
-          await Queries.updateDoc(
-            'Users',
-            user.uid,
-            { imageUrl },
-            async () =>
-              await dispatch.Account.getUserDetails({
-                uid: user.uid,
-                callback: ({ success, result }) => {
-                  // console.log('Success updaing', success, result);
-                  return (
-                    success && setState({ ...state, image: { ...state.image, uri: result.imageUrl }, isLoading: false })
-                  );
-                }
-              })
-          )
-      );
+  const updatePhoto = () =>
+    HelperFunctions.CHECK_PERMISSIONS(({ success, error }) => {
+      if (!success) return Alert.alert('Failed', `Something went wrong: ${error} `);
+      ImagePicker((image) => {
+        if (image.uri) {
+          setState({ ...state, image: { ...state.image, ...img } });
+          HelperFunctions.uploadImage(
+            `Profiles/${user.uid}/${img.fileName}`,
+            img.uri,
+            (progress) => setState({ ...state, progress, image: { ...state.image, ...img }, isLoading: true }),
+            (error) => console.log('Error uploading image'),
+            async (imageUrl) =>
+              await Queries.updateDoc(
+                'Users',
+                user.uid,
+                { imageUrl },
+                async () =>
+                  await dispatch.Account.getUserDetails({
+                    uid: user.uid,
+                    callback: ({ success, result }) => {
+                      return (
+                        success &&
+                        setState({ ...state, image: { ...state.image, uri: result.imageUrl }, isLoading: false })
+                      );
+                    }
+                  })
+              )
+          );
+        }
+      });
     });
-  };
 
   React.useEffect(() => {
     const sub = getUser();

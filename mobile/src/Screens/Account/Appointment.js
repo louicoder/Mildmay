@@ -7,6 +7,8 @@ import { Constants } from '../../Utils';
 const { width } = Dimensions.get('window');
 
 const Appointment = ({ item, index, onPress, len, extStyles }) => {
+  console.log('date', moment(item.date).format('DD/MMMM/YYYY').toString().split('/'));
+  const val = moment(item.date).format('DD/MMMM/YYYY').toString().split('/');
   return (
     <Pressable
       style={[
@@ -34,16 +36,12 @@ const Appointment = ({ item, index, onPress, len, extStyles }) => {
           justifyContent: 'center'
         }}
       >
-        <Text style={{ fontSize: RFValue(16), color: '#fff', fontWeight: 'bold' }}>
-          {new Date(item.date).toLocaleDateString('default', { day: 'numeric' })}
-        </Text>
-        <Text style={{ fontSize: RFValue(14), color: '#fff' }}>
+        <Text style={{ fontSize: RFValue(40), color: '#ffffff90', fontWeight: 'bold' }}>{val[0]}</Text>
+        <Text style={{ fontSize: RFValue(18), color: '#fff' }}>
           {/* {new Date(item.date).toLocaleDateString('default', { month: 'long' })} */}
-          September
+          {val[1]}
         </Text>
-        <Text style={{ fontSize: RFValue(16), color: '#fff', fontWeight: 'bold' }}>
-          {new Date(item.date).toLocaleDateString('default', { year: 'numeric' })}
-        </Text>
+        <Text style={{ fontSize: RFValue(16), color: '#ffffff90', fontWeight: 'bold' }}>{val[2]}</Text>
       </View>
       <View style={{ flexGrow: 1, justifyContent: 'center', paddingHorizontal: RFValue(10), alignItems: 'center' }}>
         {/* <Text>On {moment(item.date)}</Text> */}

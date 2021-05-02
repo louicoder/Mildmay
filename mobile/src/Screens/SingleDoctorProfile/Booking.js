@@ -166,12 +166,12 @@ const Booking = ({ navigation, route: { params: profile }, ...props }) => {
             placeholder="Enter desciption for appointment"
             placeholderTextColor="#aaa"
             scrollEnabled={false}
+            textAlignVertical="top"
             style={{
               backgroundColor: '#eee',
               height: RFValue(250),
               // minHeight: RFValue(50),
               padding: RFValue(10),
-              paddingTop: Platform.OS === 'ios' ? RFValue(10) : 0,
               fontSize: RFValue(14),
               marginBottom: RFValue(10)
             }}

@@ -47,14 +47,20 @@ const BlogPost = ({ navigation }) => {
     );
   };
 
+  // const selectImage = () =>
+  //   HelperFunctions.CheckPermissions(
+  //     PERMISSIONS.ANDROID.CAMERA,
+  //     ImagePicker((image) => {
+  //       // console.log('REsponse', image);
+  //       if (image.uri) setState({ ...state, image });
+  //     })
+  //   );
+
   const selectImage = () =>
-    HelperFunctions.CheckPermissions(
-      PERMISSIONS.ANDROID.CAMERA,
-      ImagePicker((image) => {
-        // console.log('REsponse', image);
-        if (image.uri) setState({ ...state, image });
-      })
-    );
+    HelperFunctions.CHECK_PERMISSIONS(({ success, error }) => {
+      if (!success) return Alert.alert('Failed', `Something went wrong: ${error} `);
+      ImagePicker((image) => (image.uri ? setState({ ...state, image }) : null));
+    });
 
   const createBlogHandler = async () => {
     setState({ ...state, loading: true });
@@ -276,14 +282,15 @@ const BlogPost = ({ navigation }) => {
           onChangeText={(caption) => setState({ ...state, caption })}
           multiline
           onContentSizeChange={() => null}
-          maxLength={100}
+          // maxLength={100}
           scrollEnabled={false}
+          textAlignVertical={'top'}
           style={{
             marginHorizontal: RFValue(10),
             padding: RFValue(10),
             backgroundColor: '#ddd',
             fontSize: RFValue(14),
-            minHeight: RFValue(200)
+            height: RFValue(200)
             // paddingTop: Platform.OS === 'ios' ? RFV
           }}
         />

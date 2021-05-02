@@ -87,7 +87,7 @@ const Search = ({ navigation }) => {
         <FlatList
           style={{ flexGrow: 1, paddingHorizontal: RFValue(10) }}
           showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.uid}
           data={state.search && state.search.length ? state.filteredResults : state.searchResults}
           renderItem={({ item }) => (
             <DoctorPreview

@@ -1,7 +1,8 @@
 import { launchImageLibrary } from 'react-native-image-picker';
-import { check, PERMISSIONS, request } from 'react-native-permissions';
+import { check, checkMultiple, PERMISSIONS, request } from 'react-native-permissions';
 import Storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
+import { Linking, Platform } from 'react-native';
 
 const DB = firestore();
 
@@ -130,3 +131,59 @@ const getArraychunks = (array, size) => {
   // console.log('CHUNK', results);
   return results;
 };
+
+export const callNumber = (phone) => {
+  // console.log('callNumber ----> ', phone);
+  let phoneNumber = phone;
+  if (Platform.OS === 'ios') {
+    phoneNumber = `telprompt:${phone}`;
+  } else {
+    phoneNumber = `tel:${phone}`;
+  }
+  Linking.canOpenURL(phoneNumber)
+    .then((supported) => {
+      if (!supported) {
+        Alert.alert('Phone number is not available');
+      } else {
+        return Linking.openURL(phoneNumber);
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const CHECK_PERMISSIONS = async (callback) => {
+  try {
+    await check(
+      Platform.select({
+        android: PERMISSIONS.ANDROID.CAMERA,
+        ios: PERMISSIONS.IOS.PHOTO_LIBRARY
+      })
+    ).then(
+      async (res) =>
+        res === 'granted'
+          ? callback({ success: true, error: undefined })
+          : await request(
+              Platform.select({
+                android: PERMISSIONS.ANDROID.CAMERA,
+                ios: PERMISSIONS.IOS.PHOTO_LIBRARY
+              })
+            ).then((resp) => callback({ success: resp === 'granted' ? true : false }))
+    );
+  } catch (error) {
+    return callback({ success: false, error: error.message });
+  }
+};
+
+// export const CHECK_GALLERY_PERMISSIONS = async (callback) => {
+//   try {
+//     // if (_allPermission['android.permission.CAMERA'] !== 'granted')
+//       await request(
+//         Platform.select({
+//           android: PERMISSIONS.ANDROID.CAMERA
+//         })
+//       ).then((resp) => callback({ success: resp === 'granted' ? true : false }));
+
+//   } catch (error) {
+//     return callback({ success: false, error: error.message });
+// }
+// };

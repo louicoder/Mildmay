@@ -95,7 +95,7 @@ const Appointments = ({ navigation }) => {
           loading.rescheduleAppointment
         }
       /> */}
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent', paddingHorizontal: RFValue(10) }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent' }}>
         <Modal
           isVisible={state.isVisible}
           closeModal={() => setState({ ...state, isVisible: false })}
@@ -107,7 +107,6 @@ const Appointments = ({ navigation }) => {
               appointment={state.activeAppoint}
               cancel={cancelAppointment}
               confirm={confirmAppointment}
-              // reschedule={rescheduleAppointment}
               reschedule={() => setState({ ...state, comp: 'reschedule' })}
               rescheduleAppointment={rescheduleAppointment}
             />
@@ -115,18 +114,20 @@ const Appointments = ({ navigation }) => {
         </Modal>
         <Header title="My Appointments" navigation={navigation} />
         <FlatList
+          showsVerticalScrollIndicator={false}
           style={{ flexGrow: 1 }}
           data={appointments}
           renderItem={(props) => (
             <Appointment
               {...props}
               len={appointments && appointments.length}
-              extStyles={{ width: '100%', marginBottom: RFValue(5), height: RFValue(120) }}
-              onPress={() => {
-                // console.log('props.item', props.item);
-                // setState({ ...state, isVisible: true, activeAppoint: { ...props.item } });
-                return navigation.navigate('EditAppoinment', { ...props.item });
+              extStyles={{
+                width: '100%',
+                marginBottom: RFValue(5),
+                height: RFValue(120)
+                // marginTop: props.index === 0 ? RFValue(10) : 0
               }}
+              onPress={() => navigation.navigate('EditAppoinment', { ...props.item })}
             />
           )}
         />

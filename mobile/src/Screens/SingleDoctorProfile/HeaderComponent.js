@@ -6,7 +6,7 @@ import styles from './Styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { Constants, Queries } from '../../Utils';
+import { Constants, HelperFunctions, Queries } from '../../Utils';
 import { useSelector } from 'react-redux';
 
 const HeaderComponent = ({ showModal, navigation, setLoading, getDoctorDetails, profile, ...state }) => {
@@ -37,7 +37,7 @@ const HeaderComponent = ({ showModal, navigation, setLoading, getDoctorDetails, 
     // });
   };
 
-  console.log('STate use', profile);
+  // console.log('STate use', profile);
   const checkExists = (array) => array.includes(auth().currentUser.uid);
 
   const Error = (title, msg) => Alert.alert(title, msg);
@@ -68,7 +68,16 @@ const HeaderComponent = ({ showModal, navigation, setLoading, getDoctorDetails, 
             <Text style={{ fontSize: RFValue(16), color: '#fff' }}>Book</Text>
           </Pressable>
 
-          <Pressable style={styles.buttons}>
+          <Pressable
+            style={styles.buttons}
+            onPress={() =>
+              profile.phoneNumber
+                ? HelperFunctions.callNumber(profile.phoneNumber)
+                : Alert.alert(
+                    'No number',
+                    'This doctor has not yet added their phone number yet. Keep checking to see when they have updated their account details'
+                  )}
+          >
             <Icon name="phone" size={RFValue(20)} style={styles.buttonIcons} color="#fff" />
             <Text style={{ fontSize: RFValue(16), color: '#fff' }}>Call</Text>
           </Pressable>

@@ -5,7 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
 import LOGO from '../../assets/MUG.png';
 import auth from '@react-native-firebase/auth';
-import { Queries } from '../../Utils';
+import { HelperFunctions, Queries } from '../../Utils';
 
 const Splash = ({ navigation: { navigate } }) => {
   const [ state, setState ] = React.useState({ loading: false });
@@ -13,12 +13,36 @@ const Splash = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auth().currentUser && auth().currentUser.uid) getUserDetails();
+    if (auth().currentUser && auth().currentUser.uid) checkPermissions();
     else navigate('Login');
   }, []);
 
-  const getUserDetails = async () => {
-    // setState({ ...state, loading: true });
+  // const getUserDetails = async () => {
+  //   // setState({ ...state, loading: true });
+  //   await dispatch.Account.getUserDetails({
+  //     uid: auth().currentUser.uid,
+  //     callback: (resp) => {
+  //       if (!resp.success) {
+  //         setState({ ...state, loading: false });
+  //         return navigate('Login');
+  //       }
+  //       setState({ ...state, loading: false });
+  //       navigate('HomeScreens');
+  //     }
+  //   });
+  // };
+
+  const checkPermissions = async () => {
+    await HelperFunctions.CHECK_PERMISSIONS((resp) => {
+      if (!resp.success) {
+        // Alert.alert('Warning', ' You will not be able to access gallery unless you grant Mildmay permissions to do so');
+        return getUserDetails();
+      }
+      return getUserDetails();
+    });
+  };
+
+  const getUserDetails = async () =>
     await dispatch.Account.getUserDetails({
       uid: auth().currentUser.uid,
       callback: (resp) => {
@@ -30,7 +54,6 @@ const Splash = ({ navigation: { navigate } }) => {
         navigate('HomeScreens');
       }
     });
-  };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
